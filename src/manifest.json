@@ -1,0 +1,21 @@
+{
+  "name": "rumba-api",
+  "short_name": "rumba-api",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff",
+  "theme_color": "#673ab8",
+  "icons": [
+    {
+      "src": "/resources/logo/logo-120.png",
+      "type": "image/png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "/resources/logo/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

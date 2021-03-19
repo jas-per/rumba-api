@@ -1,0 +1,42 @@
+.logo-header.card-header {
+	padding-left: 5px
+}
+.logo-header {
+	display: flex;
+	align-items: center;
+	height: 4rem;
+}
+.logo-header h2 {
+	font-weight: 600;
+}
+#logo {
+	margin-right: 2em;
+}
+#logo img{
+	width: 50px;
+	margin: 5px;
+	cursor: pointer;
+}
+.modal-dialog.modal-about {
+    max-width: 600px;
+    margin: 30px auto;
+}
+#dialog-about a {
+    color: #337ab7;
+}
+  
+#dialog-about > div {
+    margin-bottom: 5px;
+}
+
+#dialog-about .infobox{
+    display: flex;
+    justify-content: space-around;
+}
+
+#dialog-about .infohead{
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+

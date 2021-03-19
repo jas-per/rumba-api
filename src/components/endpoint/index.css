@@ -1,0 +1,74 @@
+.endpoint-panel.list-group-item {
+	padding: 0.25rem 0.75rem;
+	background-color: #deeacf;
+}
+.endpoint-panel.list-group-item.active {
+	padding: 0.25rem 0.75rem;
+	color: #212529;
+	border-color: #a5c871;
+	background-color: #cfe6ad;
+}
+.endpoint-header.card-header {
+	cursor: pointer;
+	padding: 0.25rem 0.75rem;
+	background-color: #FAFAFA;
+}
+.endpoint-form {
+	display: none;
+}
+.endpoint-form.active {
+	display: block;
+}
+.endpoint-panel .helpText {
+	background-color: #fffae1;
+	border-left: 1px solid rgba(0, 0, 0, 0);
+	border-right: 1px solid rgba(0, 0, 0, 0);
+}
+.endpoint-card.card{
+	border: 0;
+	background-color: #cfe6ad;
+}
+.endpoint-panel.active .endpoint-header {
+	font-weight: 600;
+	background-color: #FAFAFA;
+	border-top-left-radius: 0.25rem;
+	border-top-right-radius: 0.25rem;
+	border-top: 1px solid rgba(0, 0, 0, 0.125);
+	border-left: 1px solid rgba(0, 0, 0, 0.125);
+	border-right: 1px solid rgba(0, 0, 0, 0.125);
+	border-bottom: 0;
+}
+.endpoint-panel.active .parameters-border {
+	background-color: #FAFAFA;
+	border-left: 1px solid rgba(0, 0, 0, 0.125);
+	border-right: 1px solid rgba(0, 0, 0, 0.125);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+	border-bottom-left-radius: 0.25rem;
+	border-bottom-right-radius: 0.25rem;
+}
+.parameter.form-row,
+.parameters-header.form-row {
+	display: flex;
+	flex-wrap: nowrap;
+	padding: 0.25rem 1rem;
+	margin: 0;
+}
+.parameters-none {
+	font-size: 12px;
+	padding: 0.25rem 1rem;
+	text-align: center;
+}
+.parameters-header {
+	font-size: 12px;
+	border-bottom: 1px dotted;
+	white-space: nowrap;
+}
+.parameters-header.form-row > .inputCol {
+	text-align: center;
+}
+.submit-panel {
+	background-color: #cfe6ad;
+	padding: 0.5rem;
+	justify-content: flex-end;
+	display: flex;
+}

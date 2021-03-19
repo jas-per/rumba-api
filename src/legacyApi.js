@@ -1,49 +1,44 @@
 const apiJSON = {
-	version: '20210227',
-	hint: 'legacy subsonic api',
+	version: '20210311',
+	hint: 'Legacy Subsonic api',
+	compat: 'Differences between rum.ba server and Subsonic are highlighted in the help text. A complete overview can be found here (TODO: insert link)',
 	header: [
-		{	name: 'username',
+		{	name: 'u (username)',
 			hint: 'Username on server',
 			required: true,
 			type: 'string',
 			default: 'admin'
 		},
-		{	name: 'password',
+		{	name: 'p (password)',
 			hint: 'Password',
 			required: true,
 			type: 'string',
 			default: 'admin'
 		},
-		{	name: 'version',
+		{	name: 'v (version)',
 			hint: 'Max Api version supported by the app',
 			required: true,
 			type: 'string',
 			default: '1.16.1'
 		},
-		{	name: 'clientname',
+		{	name: 'c (clientname)',
 			hint: 'Name of the client app',
 			required: true,
 			type: 'string',
-			default: 'API Testpage'
+			default: 'API Testapp'
+		},
+		{	name: 'f (returnformat)',
+			hint: 'Data format returned by server',
+			required: true,
+			type: 'string',
+			options: ['xml','json'],
+			default: 'json'
 		},
 		{	name: 'server',
 			hint: 'Adress of the server',
 			required: true,
 			type: 'string',
 			default: 'http://localhost:1177'
-		},
-		{	name: 'returnformat',
-			hint: 'Data format returned by server',
-			required: true,
-			type: 'string',
-			enum: ['xml','json','jsonp'],
-			default: 'json'
-		},
-		{	name: 'hashed',
-			hint: 'use hash&salt (dont! - this option is here for testing subsonic-compat, not because it might be a reasonable approach to transport layer security)',
-			required: true,
-			type: 'boolean',
-			default: false
 		}
 	],
 	categories: [
@@ -71,12 +66,14 @@ const apiJSON = {
 						{	name: 'musicFolderId',
 							hint: 'If specified, only return artists in the music folder with the given ID',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'ifModifiedSince',
 							hint: 'Timestamp - if specified, only return a result if the artist collection has changed since the given time ',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 				  	]
 				},
@@ -86,7 +83,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'A string which uniquely identifies the music folder. Obtained by calls to getIndexes or getMusicDirectory',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					]
 				},
@@ -99,7 +97,8 @@ const apiJSON = {
 						{	name: 'musicFolderId',
 							hint: 'If specified, only return artists in the music folder with the given ID',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 				  	]
 				},
@@ -109,7 +108,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The artist ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					]
 				},
@@ -119,7 +119,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The album ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					]
 				},
@@ -129,7 +130,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The song ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					]
 				},
@@ -143,7 +145,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The video ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					compat: 'not implemented'
@@ -160,6 +163,7 @@ const apiJSON = {
 							hint: 'Max number of similar artists to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'includeNotPresent',
@@ -177,12 +181,14 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The artist ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'count',
 							hint: 'Max number of similar artists to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'includeNotPresent',
@@ -200,7 +206,7 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The album (al-XX) or song ID',
 							required: true,
-							type: 'int'
+							type: 'string'
 						}
 					],
 					compat: 'not implemented'
@@ -211,7 +217,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The album ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					compat: 'not implemented'
@@ -228,6 +235,7 @@ const apiJSON = {
 							hint: 'Max number of songs to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 50
 						}
 					],
@@ -239,12 +247,14 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The artist ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'count',
 							hint: 'Max number of songs to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 50
 						}
 					],
@@ -262,6 +272,7 @@ const apiJSON = {
 							hint: 'Max number of songs to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 50
 						}
 					],
@@ -280,7 +291,7 @@ const apiJSON = {
 					hint: 'Add a new top-level music folder to the library',
 					parameters: [
 						{	name: 'name',
-							hint: 'Arbitrary name of the new folder, has to be unique',
+							hint: 'Arbitrary name of the new folder, has to be unique across the library',
 							required: true,
 							type: 'string'
 						},
@@ -296,8 +307,7 @@ const apiJSON = {
 							default: false
 						}
 					],
-					role: 'admin',
-					active:true
+					role: 'admin'
 				},
 				{ 	name: 'updateMusicFolder',
 					hint: 'Update existing top-level music folder in the library',
@@ -305,7 +315,8 @@ const apiJSON = {
 						{	name: 'folderid',
 							hint: 'ID of the top-level music folder to be updated',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'name',
 							hint: 'Rename folder, has to be unique',
@@ -365,8 +376,7 @@ const apiJSON = {
 					compat: 'not implemented yet'
 				}
 			],
-			compat: 'New endpoints for rest interface to manage the library',
-			active:false
+			compat: 'New endpoints for rest interface to manage the library'
 		},
 		{	name: 'AlbumSongLists',
 			hint: 'Query the library for albums/songs with various attributes',
@@ -381,16 +391,18 @@ const apiJSON = {
 							options: ['random','newest','highest','frequent','recent','alphabeticalByName','alphabeticalByArtist','starred','byYear','byGenre']
 						},
 						{	name: 'size',
-							hint: 'The number of albums to return',
+							hint: 'The number of albums to return (max 500)',
 							required: false,
 							type: 'int',
 							default: 10,
+							min: 1,
 							max: 500
 						},
 						{	name: 'offset',
 							hint: 'List offset for paging',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'fromYear',
@@ -412,6 +424,7 @@ const apiJSON = {
 							hint: 'Only return albums from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -426,16 +439,18 @@ const apiJSON = {
 							options: ['random','newest','highest','frequent','recent','alphabeticalByName','alphabeticalByArtist','starred','byYear','byGenre']
 						},
 						{	name: 'size',
-							hint: 'The number of albums to return',
+							hint: 'The number of albums to return (max 500)',
 							required: false,
 							type: 'int',
 							default: 10,
+							min: 1,
 							max: 500
 						},
 						{	name: 'offset',
 							hint: 'List offset for paging',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'fromYear',
@@ -457,6 +472,7 @@ const apiJSON = {
 							hint: 'Only return albums from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -465,10 +481,11 @@ const apiJSON = {
 					hint: 'Returns random songs matching the given criteria',
 					parameters: [
 						{	name: 'size',
-							hint: 'The maximum number of songs to return',
+							hint: 'The maximum number of songs to return (max 500)',
 							required: false,
 							type: 'int',
 							default: 10,
+							min: 1,
 							max: 500
 						},
 						{	name: 'fromYear',
@@ -489,7 +506,8 @@ const apiJSON = {
 						{	name: 'musicFolderId',
 							hint: 'Only return songs from the music folder with the given ID',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'excludeFolderIds',
 							hint: 'Only return songs not in these music folder(s)',
@@ -509,22 +527,25 @@ const apiJSON = {
 							type: 'string'
 						},
 						{	name: 'count',
-							hint: 'The maximum number of songs to return',
+							hint: 'The maximum number of songs to return (max 500)',
 							required: false,
 							type: 'int',
 							default: 10,
+							min: 1,
 							max: 500
 						},
 						{	name: 'offset',
 							hint: 'List offset for paging',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'musicFolderId',
 							hint: 'Only return songs from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -540,6 +561,7 @@ const apiJSON = {
 							hint: 'Only return results from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -551,6 +573,7 @@ const apiJSON = {
 							hint: 'Only return results from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -572,42 +595,49 @@ const apiJSON = {
 							hint: 'Maximum number of artists to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'artistOffset',
 							hint: 'List offset for paging artists',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'albumCount',
 							hint: 'The maximum number of albums to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'albumOffset',
 							hint: 'List offset for paging albums',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'songCount',
 							hint: 'The maximum number of songs to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'songOffset',
 							hint: 'List offset for paging songs',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'musicFolderId',
 							hint: 'Only return results from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -624,42 +654,49 @@ const apiJSON = {
 							hint: 'The maximum number of artists to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'artistOffset',
 							hint: 'List offset for paging artists',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'albumCount',
 							hint: 'The maximum number of albums to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'albumOffset',
 							hint: 'List offset for paging albums',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'songCount',
 							hint: 'The maximum number of songs to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						},
 						{	name: 'songOffset',
 							hint: 'List offset for paging songs',
 							required: false,
 							type: 'int',
+							min: 0,
 							default: 0
 						},
 						{	name: 'musicFolderId',
 							hint: 'Only return results from the music folder with the given ID',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						}
 					]
@@ -686,7 +723,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'ID of the playlist to return, as obtained by getPlaylists',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					]
 				},
@@ -697,7 +735,7 @@ const apiJSON = {
 							hint: 'The playlist ID - required for update (only the owner of a playlist is allowed to update it)',
 							required: false,
 							type: 'int',
-							default: 20
+							min: 0
 						},
 						{	name: 'name',
 							hint: 'The human-readable name of the playlist - required for create (but defaults to "YYMMDD - hh:mm:ss")',
@@ -719,7 +757,8 @@ const apiJSON = {
 						{	name: 'playlistId',
 							hint: 'The playlist ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'name',
 							hint: 'The human-readable name of the playlist - Not supplied = no change',
@@ -756,7 +795,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The playlist ID',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					]
 				}
@@ -777,6 +817,7 @@ const apiJSON = {
 							hint: 'If specified, the server will attempt to limit the bitrate to this value, in kilobits per second. If set to zero, no limit is imposed',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'Transcoding not implemented yet because for video on low-power devices we\'d need hardware accelerated encoders - while most single-board computers do have hardware encoding logic (to handle video recording) we are still a long way from just using mainline kernel + ffmpeg (2021). Will be implemented when a standard way of hw-accelerated transcoding stabilizes!'
 						},
 						{	name: 'format',
@@ -790,6 +831,7 @@ const apiJSON = {
 							hint: 'Only applicable to video streaming. If specified, start streaming at the given offset (in seconds) into the video. Typically used to implement video skipping',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						},
 						{	name: 'size',
@@ -837,7 +879,8 @@ const apiJSON = {
 						{	name: 'bitRate',
 							hint: 'If specified, the server will attempt to limit the bitrate to this value, in kilobits per second. If this parameter is specified more than once, the server will create a variant playlist, suitable for adaptive bitrate streaming. The playlist will support streaming at all the specified bitrates. The server will automatically choose video dimensions that are suitable for the given bitrates. A certain width and height may be specified: bitRate=1000@480x360',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'audioTrack',
 							hint: 'The ID of the audio track to use. See getVideoInfo for how to get the list of available audio tracks for a video. ',
@@ -878,7 +921,8 @@ const apiJSON = {
 						{	name: 'size',
 							hint: 'If specified, scale image to this size. Single Integer - Subsonic does not preserve aspect ratio when scaling',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 20
 						}
 					],
 					return: 'binary/image'
@@ -986,12 +1030,14 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'A string which uniquely identifies the file to scrobble',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'time',
 							hint: 'The timestamp at which the song was listened to',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'not implemented yet'
 						},
 						{	name: 'submission',
@@ -1015,7 +1061,7 @@ const apiJSON = {
 					compat: 'not implemented yet'
 				},
 				{ 	name: 'createShare',
-					hint: 'Creates a public URL that can be used by anyone to stream music or video from the server. The URL is short and suitable for posting on Facebook, Twitter etc',
+					hint: 'Creates a public URL that can be used by anyone to stream music or video from the server. The URL is short and suitable for posting on social media',
 				  	parameters: [
 						{	name: 'id',
 							hint: 'ID(s) of songs, albums or videos to share',
@@ -1031,7 +1077,8 @@ const apiJSON = {
 						{	name: 'expires',
 							hint: 'Timestamp at which the share expires',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 				  	],
 					role: 'share',
@@ -1043,7 +1090,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'ID of the share to update',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'description',
 							hint: 'Will be displayed to people visiting the shared media',
@@ -1053,7 +1101,8 @@ const apiJSON = {
 						{	name: 'expires',
 							hint: 'Timestamp at which the share expires',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 				  	],
 					role: 'share',
@@ -1065,7 +1114,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'ID of the share to delete',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					role: 'share',
@@ -1074,7 +1124,7 @@ const apiJSON = {
 			]
 		},
 		{	name: 'Podcast',
-			hint: '',
+			hint: 'Manage/Subcribe to Podcasts and get new episodes',
 			endpoints: [
 				{ 	name: 'getPodcasts',
 					hint: 'Returns all Podcast channels the server subscribes to, and (optionally) their episodes. This method can also be used to return details for only one channel - refer to the id parameter. A typical use case for this method would be to first retrieve all channels without episodes, and then retrieve all episodes for the single channel the user select',
@@ -1088,7 +1138,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'If specified, only return the Podcast channel with this ID',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 				  	],
 					compat: 'not implemented yet'
@@ -1100,6 +1151,7 @@ const apiJSON = {
 							hint: 'The maximum number of episodes to return',
 							required: false,
 							type: 'int',
+							min: 1,
 							default: 20
 						}
 					]
@@ -1127,7 +1179,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The ID of the Podcast channel to delete',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					role: 'podcast',
@@ -1139,7 +1192,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The ID of the Podcast episode to delete',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					role: 'podcast',
@@ -1151,7 +1205,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The ID of the Podcast episode to download',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					role: 'podcast',
@@ -1160,7 +1215,7 @@ const apiJSON = {
 			]
 		},
 		{	name: 'Jukebox',
-			hint: 'Jukebox interface',
+			hint: 'Jukebox interface for server-side playback',
 			endpoints: [
 				{ 	name: 'jukeboxControl',
 					hint: 'Controls the jukebox, i.e. playback directly on the server\'s audio hardware',
@@ -1175,12 +1230,14 @@ const apiJSON = {
 							hint: 'Used by skip and remove. Zero-based index of the song to skip to or remove',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'Required if action is skip or remove'
 						},
 						{	name: 'offset',
 							hint: 'Used by skip. Start playing this many seconds into the track',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'id',
 							hint: 'Used by add and set. ID of song to add to the jukebox playlist. Use multiple id parameters to add many songs in the same request. (set is similar to a clear followed by a add, but will not change the currently playing track)',
@@ -1189,7 +1246,7 @@ const apiJSON = {
 							multiple: true
 						},
 						{	name: 'gain',
-							hint: 'Used by setGain to control the playback volume',
+							hint: 'Used by setGain to control the playback volume (1.0 equals 100%)',
 							required: false,
 							type: 'float',
 							min: 0.0,
@@ -1242,7 +1299,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The ID of the station to update',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'streamUrl',
 							hint: 'The stream URL for the station',
@@ -1269,7 +1327,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'The ID of the station to delete',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					role: 'admin',
@@ -1286,7 +1345,8 @@ const apiJSON = {
 						{	name: 'since',
 							hint: 'Only return messages newer than this timestamp',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					compat: 'not implemented yet'
@@ -1577,7 +1637,7 @@ const apiJSON = {
 			]
 		},
 		{	name: 'Bookmarks',
-			hint: 'Save/restore play queues',
+			hint: 'Save/restore bookmarks and play queues',
 			endpoints: [
 				{ 	name: 'getBookmarks',
 					hint: 'Returns all bookmarks for this user. A bookmark is a position within a certain media file',
@@ -1589,12 +1649,14 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'ID of the media file to bookmark. If a bookmark already exists for this file it will be overwritten',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'position',
 							hint: 'The position (in milliseconds) within the media file',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						},
 						{	name: 'comment',
 							hint: 'A user-defined comment',
@@ -1610,7 +1672,8 @@ const apiJSON = {
 						{	name: 'id',
 							hint: 'ID of the media file for which to delete the bookmark. Other users\' bookmarks are not affected',
 							required: true,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					compat: 'not implemented yet'
@@ -1632,12 +1695,14 @@ const apiJSON = {
 							hint: 'The ID of the current playing song',
 							required: false,
 							type: 'int',
+							min: 0,
 							compat: 'Fails as soon as there are multiple occurences of the same song in the playqueue (see general notes about the Subsonic api)'
 						},
 						{	name: 'position',
 							hint: 'The position in milliseconds within the currently playing song',
 							required: false,
-							type: 'int'
+							type: 'int',
+							min: 0
 						}
 					],
 					compat: 'not implemented yet'

@@ -1,0 +1,24 @@
+#header-panel {
+    position: relative;
+	border-bottom: 0;
+}
+#header-panel > .head-parameters {
+	padding: 0.25em;
+	position: absolute;
+	width: 100%;
+	top: 0;
+    z-index: 50;
+}
+.head-parameters .head-parameter-list {
+	display:none;
+}
+.head-parameters.withOverlay .head-parameter-list {
+	display:block;
+}
+.head-parameters.withOverlay {
+	background-color: #cfe6adba;
+	height: calc(100vh - 8.25em);
+}
+.head-parameter-list > .parameter:nth-of-type(even) {
+	background-color: #FAFAFA;
+}

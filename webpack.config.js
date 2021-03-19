@@ -4,7 +4,8 @@ const webpack = require('webpack'), path = require('path'),
       HtmlWebpackPlugin = require('html-webpack-plugin'),
       MiniCssExtractPlugin = require('mini-css-extract-plugin'),
       TerserPlugin = require("terser-webpack-plugin"),
-      CopyPlugin = require("copy-webpack-plugin");
+      CopyPlugin = require("copy-webpack-plugin"),
+      BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
 const plugins = [
@@ -26,7 +27,9 @@ const plugins = [
 
 const productionMode = process.env.NODE_ENV == 'production';
 if (productionMode) {
-  plugins.push(new MiniCssExtractPlugin());
+  plugins.push(new MiniCssExtractPlugin())
+} else if (process.env.NODE_ENV == 'analyse') {
+  plugins.push(new BundleAnalyzerPlugin())
 }
 
 module.exports = {
@@ -34,7 +37,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     app: { import: './index.js', dependOn: 'common' },
-    common: ['preact','mobx','mobx-react','mobx-state-tree','react-bootstrap'],
+    common: ['preact','mobx','mobx-react-lite','mobx-state-tree','react-bootstrap','react-icons','react-icons/bs','react-xml-viewer'],
   },
   optimization: {
     splitChunks: {
@@ -87,9 +90,13 @@ module.exports = {
   },
   resolve: {
     alias: {
-        'react': 'preact/compat',
-        'react-dom': 'preact/compat',
-      }
+      'react': 'preact/compat',
+      'react-dom': 'preact/compat',
+      },
+    fallback: {
+      'stream': require.resolve('stream-browserify'),
+      'buffer': require.resolve('buffer/')
+    }
   },
   output: {
     path: path.join(__dirname, '..', 'SDtest', 'api', 'dist'),

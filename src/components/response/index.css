@@ -1,0 +1,36 @@
+#response-display {
+	padding: 0.25em;
+	height: 100%;
+	display: flex;
+	flex-flow: column;
+	overflow: hidden;
+}
+#response-url {
+	padding: 0.25rem 0.75rem;
+	font-size: 18px;
+	border-bottom: 0;
+	font-weight: 600;
+}
+#response-url > span:last-child {
+	font-size: 14px;
+	padding-left: 0.5em;
+}
+#response-body {
+	height: calc(100% - 2.0em);
+}
+#response-body img {
+	max-height: 100%;
+	padding: 15px;
+}
+.scrollbox{
+	overflow-y: scroll;
+	padding: 0.5em;
+	height: 100%;
+}
+.response-none {
+	display: flex;
+	padding: 5px;
+}
+.response-none > svg {
+	font-size: 3em;
+}

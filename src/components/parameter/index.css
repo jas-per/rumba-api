@@ -1,0 +1,36 @@
+.form-row > .sendCol {
+	width: 40px;
+	flex: 0 0 auto;
+}
+.form-row > .nameCol {
+    flex: 0 2 auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 140px;
+}
+.form-row > .inputCol {
+	flex: 0 2 auto;
+	max-width: 180px;
+}
+.withoutHelp .form-row > .helpCol{
+	display: none;
+}
+.withHelp .form-row > .helpCol {
+	display: inline-block;
+	font-size: 14px;
+	min-width: 200px;
+	flex: 2 1 auto;
+}
+.parameter.form-row > .nameCol {
+	padding-top: 2px;
+}
+.parameter.form-row > .sendCol {
+	padding-top: 3px;
+}
+.parameters-list > .parameter:nth-of-type(odd) {
+	background-color: #FFF;
+}
+input[disabled],
+select[disabled] {
+	pointer-events:none;
+}

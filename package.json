@@ -13,9 +13,10 @@
   "license": "GPL3+",
   "homepage": "https://rum.ba",
   "scripts": {
-    "dev": "webpack serve --devtool source-map",
-    "build": "webpack --progress --profile",
-    "prod": "webpack --progress --profile --node-env production",
+    "dev": "webpack serve --devtool source-map --node-env development",
+    "analyse": "webpack serve --devtool source-map --node-env analyse",
+    "build": "webpack --progress --profile --node-env production",
+    "serve": "webpack serve --progress --profile --node-env production",
     "lint": "eslint src"
   },
   "eslintConfig": {
@@ -42,15 +43,19 @@
     "webpack-dev-server": "^3.11.0",
     "bootstrap": "^4.6.0",
     "sass": "^1.32.8",
-    "sass-loader": "^11.0.1"
+    "sass-loader": "^11.0.1",
+    "buffer": "^6.0.3",
+    "stream-browserify": "^3.0.0",
+    "webpack-bundle-analyzer": "^4.4.0"
   },
   "dependencies": {
     "bootstrap-icons": "^1.4.0",
     "mobx": "^6.1.7",
-    "mobx-react": "^7.1.0",
+    "mobx-react-lite": "^3.2.0",
     "mobx-state-tree": "^5.0.1",
     "preact": "^10.3.2",
     "react-bootstrap": "^1.5.0",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "react-xml-viewer": "^1.3.0"
   }
 }
