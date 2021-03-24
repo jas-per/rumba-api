@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { Card, Button, ListGroup } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 import NetworkIndicator from '/components/logo'
+import Help from '/components/help'
 import Header from '/components/header'
-import Category from '/components/category'
+import Category, { CategoryList } from '/components/category'
 import Response from '/components/response'
 import './bootstrap.scss'
 import './index.css'
+
 
 const clearLS = () => {
 	window.localStorage.clear()
@@ -23,32 +25,41 @@ const App = observer(({ api, appState }) => {
 		<div id="app" class="container-fluid">
 			<div class="row">
 				{/* request */}
-				<Card id="request-panel" className={`${showHelp ? 'col-7 withHelp' : 'col-4 withoutHelp'}`}>
+				<Card id="request-panel" className={`${showHelp ? 'col-7' : 'col-4'}`}>
+					{/* header */}
 					<Card.Header className="logo-header">
 						<NetworkIndicator serverVersion={api.version} requestPending={appState.requestPending} />
 						<h2>Request</h2>
+						<Help toggle={toggleHelp} showing={showHelp}/>
 					</Card.Header>
 					{/* head parameters */}
 					<Header api={api.header}
-							appState={appState} />
-					{/* categories */}
-					<ListGroup variant="flush" id="categorys-panel">
-						{api.categories.map((category, index) => (
-							<Category
-								api={category}
-								appState={appState.getCategoryByName(category.name)}
-								toggleActiveCategory={appState.toggleActiveCategory}
-								fetchEndpoint={appState.fetchEndpoint}
-								/>
-						))}
-					</ListGroup>
+							appState={appState}
+							showHelp={showHelp} />
+					{/* categories & selected endpoint */}
+					<div id="api-panel">
+						<CategoryList 	api={api.categories}
+										appState={appState}
+										showHelp={showHelp} />
+						{appState.hasActiveCategory && (
+							<div id="endpoints-panel">
+								<Category
+									api={api.categories.filter(category => category.name == appState.activeCategory.name)[0]}
+									appState={appState.activeCategory}
+									isMinimized={false}
+									showEndpoints={true}
+									showHelp={showHelp}
+									toggleActiveCategory={appState.toggleActiveCategory}
+									fetchEndpoint={appState.fetchEndpoint}
+									/>
+							</div>
+						)}
+					</div>
+					{/* footer */}
 					<Card.Footer className="text-muted">
 						<div id="footer-actions">
 							<div>
-								<Button size="sm" onClick={clearLS}>reset form</Button>
-							</div>
-							<div>
-								<Button size="sm" onClick={toggleHelp}>help</Button>
+								<Button size="sm" variant="warning" onClick={clearLS}>reset form</Button>
 							</div>
 						</div>
 					</Card.Footer>
@@ -58,7 +69,7 @@ const App = observer(({ api, appState }) => {
 					<Card.Header className="logo-header">
 						<h2>Response</h2>
 					</Card.Header>
-					<Response response={appState.response}/>
+					<Response response={appState.response} pending={appState.requestPending}/>
 				</Card>
 			</div>
 		</div>

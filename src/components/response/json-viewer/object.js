@@ -20,7 +20,12 @@ const ObjectJson = memo(({ name, json, collapsible, indentSize, indentIncr, more
                             }}>
                 <span class="indent">{indent}</span>
                 <span>
-                    {name && `"${name}": `}
+                    {collapsible && propCount ? (
+                        <span class={`${collapsed ? 'fold-open' : 'fold-close'}`} ></span>
+                    ) : (
+                        <span class="foldIndent">  </span>
+                    )}
+                    {name && <><span class="property-name">"{name}"</span><span>: </span></>}
                     {"{"}
                 </span>
                 {collapsed && (
@@ -29,7 +34,7 @@ const ObjectJson = memo(({ name, json, collapsible, indentSize, indentIncr, more
                     </span>
                 )}
                 {(collapsed || !propCount) && (
-                    <span>{' }'}</span>
+                    <span>{" }"}{moreSiblings && ","}</span>
                 )}
             </div>
             {!collapsed && Object.keys(json).map((key, index) => (
@@ -53,17 +58,17 @@ const ObjectJson = memo(({ name, json, collapsible, indentSize, indentIncr, more
                     ) : (
                         <ValueJson  name={key}
                                     json={json[key]} 
-                                    indent={indent + ' '.repeat(indentIncr)}
+                                    indent={indent + ' '.repeat(indentIncr+2)}
                                     moreSiblings={index < propCount -1}
                                     />
                     ))}
                 </> 
             ))}
-            {!collapsed && (
+            {(!collapsed && !!propCount) && (
                 <div style={{ cursor: 'text'  }}>
                     <span class="indent">{indent}</span>
                     <span>
-                        {'}'}
+                        {"  }"}
                         {moreSiblings && ","}
                     </span>
                 </div>

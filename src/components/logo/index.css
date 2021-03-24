@@ -1,21 +1,42 @@
 .logo-header.card-header {
-	padding-left: 5px
+	/* padding-left: 5px; */
+    padding: 0.75rem 1.5rem;
+    /* display: flex;
+    justify-content: space-between; */
 }
 .logo-header {
 	display: flex;
 	align-items: center;
 	height: 4rem;
+    justify-content: space-between;
 }
 .logo-header h2 {
 	font-weight: 600;
 }
 #logo {
-	margin-right: 2em;
+	/* margin-right: 2em; */
 }
 #logo img{
 	width: 50px;
-	margin: 5px;
 	cursor: pointer;
+}
+.infobox img {
+    width: 100px;
+}
+.logo-animation {
+    animation: rotation 4s infinite linear;
+    animation-play-state: running;
+}
+@keyframes rotation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
+}
+.logo-animation.paused {
+    animation-play-state: paused;
 }
 .modal-dialog.modal-about {
     max-width: 600px;

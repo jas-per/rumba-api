@@ -1,30 +1,28 @@
-.form-row > .sendCol {
+.form-row > .send-col {
 	width: 40px;
 	flex: 0 0 auto;
 }
-.form-row > .nameCol {
+.form-row > .name-col {
     flex: 0 2 auto;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	max-width: 140px;
 }
-.form-row > .inputCol {
+.form-row > .input-col {
 	flex: 0 2 auto;
 	max-width: 180px;
 }
-.withoutHelp .form-row > .helpCol{
-	display: none;
-}
-.withHelp .form-row > .helpCol {
+.form-row > .help-col {
 	display: inline-block;
 	font-size: 14px;
 	min-width: 200px;
 	flex: 2 1 auto;
+	align-self: center;
 }
-.parameter.form-row > .nameCol {
+.parameter.form-row > .name-col {
 	padding-top: 2px;
 }
-.parameter.form-row > .sendCol {
+.parameter.form-row > .send-col {
 	padding-top: 3px;
 }
 .parameters-list > .parameter:nth-of-type(odd) {

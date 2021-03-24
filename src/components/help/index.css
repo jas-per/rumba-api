@@ -1,0 +1,27 @@
+#help-button {
+	width: 48px;
+	height: 48px;
+	background: #cfe6ad;
+    border-radius: 50%;
+	border: 1px solid #a5c87177;
+	position: relative;
+	text-align: center;
+	line-height: 48px;
+	cursor: pointer;
+}
+
+#help-button > svg {
+	position: absolute;
+	z-index: 2;
+	color: #a5c87177;
+	font-size: 42px;
+	top: calc(50% - 21px);
+	left: calc(50% - 21px);
+}
+
+#help-button > span {
+	position: relative;
+	z-index: 3;
+	font-weight: 600;
+	color: #444c;
+}

@@ -16,12 +16,39 @@ html, body {
 	padding: 0;
 	margin: 5px;
 }
-#response-panel {
-	padding: 0;
-	margin: 5px;
-	flex-grow: 2;
+#api-panel {
+	overflow-y: scroll;
+	height: 100%;
+	margin-top: 50px;
+	display: flex;
+}
+#categorys-panel {
+	width: 100%;
+	flex-shrink: 100;
+}
+#categorys-panel > .list-group-item {
+	padding: 0.25em;
+	border: 0;
+}
+#endpoints-panel {
+	width: 100%;
+}
+#endpoints-panel > .category-panel {
+	padding: 0.25em;
+	border: 0;
 }
 #footer-actions {
 	display: flex;
 	justify-content: space-between;
+}
+.btn-warning {
+	background-color: #fffae1;
+}
+#footer-actions .btn-sm {
+	padding: 0.1rem 0.5rem;
+}
+#response-panel {
+	padding: 0;
+	margin: 5px;
+	flex-grow: 2;
 }

@@ -13,12 +13,12 @@ const activateInput = (event, appState) => {
 	}
 }
 
-const Parameter = observer(({ appState, api }) => 
+const Parameter = observer(({ appState, api, showHelp }) => 
 	<Form.Row className="parameter">
-		<Col className="nameCol">
+		<Col className="name-col">
 			{api.name}
 		</Col>
-		<Col className="sendCol">
+		<Col className="send-col">
 			<Form.Switch
 				custom
 				inline
@@ -29,7 +29,7 @@ const Parameter = observer(({ appState, api }) =>
 				onChange={() => {appState.toggleSend()}}
 			/>
 		</Col>
-		<Col className="inputCol" onClick={api.required ? '' : (event) => activateInput(event, appState)}>
+		<Col className="input-col" onClick={api.required ? '' : (event) => activateInput(event, appState)}>
 			{(api.type == 'boolean' || (api.options && api.options.length)) ? (
 				<SelectParam 
 					appState={appState}
@@ -42,16 +42,18 @@ const Parameter = observer(({ appState, api }) =>
 					/>
 			)}
 		</Col>
-		<Col className="helpCol">
-			<div>
-				{api.hint}
-			</div>
-			{api.compat && (
-					<div class="compat-remark">
-						{api.compat}
-					</div>
-				)}
-		</Col>
+		{showHelp && (
+			<Col className="help-col">
+				<div>
+					{api.hint}
+				</div>
+				{api.compat && (
+						<div class="compat-remark">
+							{api.compat}
+						</div>
+					)}
+			</Col>
+		)}
 	</Form.Row>
 )
 

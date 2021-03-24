@@ -122,6 +122,7 @@ const AppStore = types.model({
     },
 
     fetchEndpoint: flow(function* (endpoint, parameters) {
+        if (self.requestPending) return
         let requestUrl = '', headParameters = ''
         // transfer head parameters
         self.header.forEach((parameter) => {
@@ -170,6 +171,12 @@ const AppStore = types.model({
 
 })).views(self => ({
 
+    get hasActiveCategory() {
+        return (self.categories.filter(category => category.active === true).length > 0)
+    },
+    get activeCategory() {
+        return self.categories.filter(category => category.active === true)[0]
+    },
     getCategoryByName(categoryName) {
         return self.categories.filter(category => category.name == categoryName)[0]
     },

@@ -12,12 +12,12 @@
 .head-parameters .head-parameter-list {
 	display:none;
 }
-.head-parameters.withOverlay .head-parameter-list {
+.head-parameters.with-overlay .head-parameter-list {
 	display:block;
 }
-.head-parameters.withOverlay {
+.head-parameters.with-overlay {
 	background-color: #cfe6adba;
-	height: calc(100vh - 8.25em);
+	height: calc(100vh - 7.85em);
 }
 .head-parameter-list > .parameter:nth-of-type(even) {
 	background-color: #FAFAFA;

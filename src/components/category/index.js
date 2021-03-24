@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
-import { ListGroup, Card } from 'react-bootstrap'
+import { ListGroup, Card, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { BsGear, BsFolder, BsBook, BsCardList, BsSearch, BsCollectionPlay, BsFileArrowDown, BsReplyAll, BsStar, BsMic, BsVolumeUp, BsWifi, BsChatDots, BsPeople, BsBookmark, BsFillAlarmFill } from "react-icons/bs"
-import Endpoint from '/components/endpoint'
+import { EndpointList } from '/components/endpoint'
 import './index.css'
+
 
 const renderIcon = (categoryName) => {
 	switch(categoryName) {
@@ -25,31 +26,47 @@ const renderIcon = (categoryName) => {
 	}
 }
 
-const Category = observer(({ api, appState, toggleActiveCategory, fetchEndpoint }) => 
-	<ListGroup.Item className={`category-panel${appState.active ? ' active' : ''}`}>
+const ConditionalWrapper = ({
+    condition,
+    wrapper,
+    children,
+}) => (condition ? wrapper(children) : children);
+
+const Category = observer(({ api, appState, isMinimized, showEndpoints, showHelp, toggleActiveCategory, fetchEndpoint}) => 
+	<ListGroup.Item className={`category-panel ${isMinimized ? 'minimized' : ''} ${appState.active ? 'active' : ''}`}>
 		<Card className="category-card">
-			<Card.Header 	className="category-header"
-							onClick={(event) => {
-								toggleActiveCategory(api.name)
-								setTimeout(() => {event.target.scrollIntoView()}, 20);
-							}}>
-				{renderIcon(api.name)} {api.name}
-			</Card.Header>
-			<div class="helpText">
-				{api.hint}
-			</div>
-			<ListGroup variant="flush" className="category-endpoints">
-				{api.endpoints.map((endpoint, index) => (
-					<Endpoint 
-						api={endpoint}
-						appState={appState.getEndpointByName(endpoint.name)}
-						toggleActiveEndpoint={appState.toggleActiveEndpoint}
-						fetchEndpoint={fetchEndpoint}
-						/>
-				))}
-			</ListGroup>
+			<ConditionalWrapper condition={isMinimized} wrapper={children => (
+				<OverlayTrigger
+					overlay={<Tooltip id={`tooltip-${api.name}`} className="category-tooltip">{api.name}</Tooltip>}
+					placement='right'
+					>
+					{children}
+				</OverlayTrigger>
+				)}>
+				<Card.Header 
+					className="category-header"
+					onClick={(event) => {
+						toggleActiveCategory(api.name)
+						document.getElementById('api-panel').scrollTop = 0
+					}}>
+					{renderIcon(api.name)}
+					{!isMinimized && <span class="category-name">{api.name}</span>}
+				</Card.Header>
+			</ConditionalWrapper>
+			{(!isMinimized && showHelp) && (
+				<div class="help-text">
+					{api.hint}
+				</div>
+			)}
+			{showEndpoints && (
+				<EndpointList 	api={api.endpoints}
+								appState={appState}
+								showHelp={showHelp}
+								fetchEndpoint={fetchEndpoint} />
+			)}
 		</Card>
 	</ListGroup.Item>
 )
 
 export default Category
+export { default as CategoryList } from './list'

@@ -11,23 +11,25 @@ const onFormSubmit = (event, fetchEndpoint) => {
 					)
 };
 
-const Endpoint = observer(({ api, appState, toggleActiveEndpoint, fetchEndpoint }) => 
-	<ListGroup.Item className={`endpoint-panel${appState.active ? ' active' : ''}`}>
+const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetchEndpoint }) => 
+	<ListGroup.Item className={`endpoint-panel ${appState.active ? 'active' : ''}`}>
 		<Card className="endpoint-card">
 			<Card.Header className="endpoint-header" onClick={() => toggleActiveEndpoint(api.name)}>
 				{appState.active ? <BsFillCaretDownFill /> : <BsFillCaretRightFill /> } {api.name}
 			</Card.Header>
-			<div class="helpText">
-				<div>
-				{api.hint}
-				</div>
-				{api.compat && (
-					<div class="compat-remark">
-						{api.compat}
+			{showHelp && (
+				<div class="help-text">
+					<div>
+					{api.hint}
 					</div>
-				)}
-			</div>
-			<Form 	className={`endpoint-form${appState.active ? ' active' : ''}`}
+					{api.compat && (
+						<div class="compat-remark">
+							{api.compat}
+						</div>
+					)}
+				</div>
+			)}
+			<Form 	className={`endpoint-form ${appState.active ? 'active' : ''}`}
 					onSubmit={(event) => {onFormSubmit(event, fetchEndpoint)}}
 					action={api.name}
 					>
@@ -35,22 +37,23 @@ const Endpoint = observer(({ api, appState, toggleActiveEndpoint, fetchEndpoint 
 					{api.parameters ? (
 						<>
 							<Form.Row className="parameters-header">
-								<Col className="nameCol">
+								<Col className="name-col">
 									parameter
 								</Col>
-								<Col className="sendCol">
+								<Col className="send-col">
 									send
 								</Col>
-								<Col className="inputCol">
+								<Col className="input-col">
 									value
 								</Col>
-								<Col className="helpCol" />
+								<Col className="help-col" />
 							</Form.Row>
 							<div class="parameters-list">
 								{api.parameters.map((parameter, index) => (
 									<Parameter 
 										appState={appState.getParameterByName(parameter.name)}
 										api={parameter}
+										showHelp={showHelp}
 									/>
 								))}
 							</div>
@@ -72,3 +75,4 @@ const Endpoint = observer(({ api, appState, toggleActiveEndpoint, fetchEndpoint 
 );
 
 export default Endpoint;
+export { default as EndpointList } from './list'

@@ -8,15 +8,7 @@ const NetworkIndicator = ({serverVersion, requestPending}) => {
 
     return (
         <div id="logo">
-            {requestPending ? (
-                <picture onClick={ () => setShowAbout(true) } >
-                    <source srcSet="/resources/logo/logo_load.webp" type="image/webp" />
-                    <source srcSet="/resources/logo/logo_load.apng" type="image/png" />
-                    <img src="/resources/logo/logo_load.gif" />
-                </picture>
-            ) : (
-                <img src="/resources/logo/logo_still.png" onClick={ () => setShowAbout(true) } />
-            )}
+            <img src="/resources/logo.svg" class={`logo-animation ${requestPending ? '' : 'paused'}`} onClick={ () => setShowAbout(true) } />
             <AboutDialog show={showAbout} closeFn={ () => setShowAbout(false) } serverVersion={serverVersion}/>
         </div>
     )

@@ -1,12 +1,14 @@
 .endpoint-panel.list-group-item {
 	padding: 0.25rem 0.75rem;
 	background-color: #deeacf;
+	opacity: 0.75;
 }
 .endpoint-panel.list-group-item.active {
 	padding: 0.25rem 0.75rem;
 	color: #212529;
 	border-color: #a5c871;
 	background-color: #cfe6ad;
+	opacity: 1;
 }
 .endpoint-header.card-header {
 	cursor: pointer;
@@ -19,10 +21,13 @@
 .endpoint-form.active {
 	display: block;
 }
-.endpoint-panel .helpText {
+.endpoint-panel .help-text {
 	background-color: #fffae1;
 	border-left: 1px solid rgba(0, 0, 0, 0);
 	border-right: 1px solid rgba(0, 0, 0, 0);
+}
+.endpoint-panel.active .help-text {
+	margin: 0 1px;
 }
 .endpoint-card.card{
 	border: 0;
@@ -56,14 +61,14 @@
 .parameters-none {
 	font-size: 12px;
 	padding: 0.25rem 1rem;
-	text-align: center;
+	text-align: right;
 }
 .parameters-header {
 	font-size: 12px;
 	border-bottom: 1px dotted;
 	white-space: nowrap;
 }
-.parameters-header.form-row > .inputCol {
+.parameters-header.form-row > .input-col {
 	text-align: center;
 }
 .submit-panel {

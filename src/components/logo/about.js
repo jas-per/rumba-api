@@ -8,7 +8,7 @@ const AboutDialog = ({ show, closeFn, serverVersion }) =>
         <Modal.Body id="dialog-about">
             <div className="infobox">
             <div>
-                <img src="resources/logo/logo_still.png" />
+                <img src="resources/logo.svg" />
             </div>
             <div>
                 <div className="infohead">

@@ -1,6 +1,45 @@
+.response-json {
+    font-weight: 600;
+}
+.fold-open {
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+    border-left: 8px solid rgb(186, 186, 186);
+    display: inline-block;
+    margin-right: 0.1em;
+}
+.fold-close {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 8px solid rgb(186, 186, 186);
+    display: inline-block;
+    margin-right: 0.1em;
+}
+.property-name {
+    color: rgb(60, 60, 60);
+    font-weight: 500;
+}
 .value-string {
-    color: blue;
+    color: rgb(0, 136, 0);
+    font-weight: 500;
 }
 .value-bool {
-    color: pink;
+    color: rgb(0, 0, 255);
+    font-weight: 500;
+}
+.value-numeric {
+    color: rgb(102, 0, 102);
+    font-weight: 500;
+}
+.value-null {
+    color: rgb(221, 52, 193);
+    font-weight: 500;
+}
+.collapsedInfo {
+    color: rgb(186, 186, 186);
+    font-weight: 500;
 }

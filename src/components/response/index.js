@@ -13,7 +13,7 @@ const xmlViewerTheme = {
 	attributeValueColor: '#080'
 }
 
-const Response = observer(({ response }) =>
+const Response = observer(({ response, pending }) =>
 
     <div id="response-display" class={`${response.error ? 'err' : 'noErr'}`}>
         <Card>
@@ -26,33 +26,39 @@ const Response = observer(({ response }) =>
                 </span>
             </Card.Header>
         </Card>
-        <div id="response-body">
-            {response.type == 'none' ? (
-                <div class="response-none">
-                    <BsChevronDoubleLeft/>
-                    <span>
-                        <div>please use left menu</div>
-                        <div>to call api endpoints</div>
-                    </span>
-                </div>
-            ) : (response.type == 'json' ? (
-                <div class="scrollbox">
-                    <JSONViewer json={response.getBody()} collapsible="true" />
-                </div>
-            ) : (response.type == 'xml' ? (
-                <div class="scrollbox">
-                    <XMLViewer xml={response.getBody()} theme={xmlViewerTheme} collapsible="true" />
-                </div>
-            ) : (response.type == 'imageUrl' ? (
-                <img src={response.url}/>
-            ) : (response.type == 'audioUrl' ? (
-                <Player url={response.url}/>
-            ) : (response.type == 'fileUrl' ? (
-                <div>file download</div>
-            ) : (
-                <div>default TODO: insert helptext</div>
-            ))))))}
-        </div>
+        { pending ? (
+            <div id="pending">
+                request pending ..
+            </div>
+        ) : (
+            <div id="response-body">
+                {response.type == 'none' ? (
+                    <div class="response-none">
+                        <BsChevronDoubleLeft/>
+                        <span>
+                            <div>please use left menu</div>
+                            <div>to call api endpoints</div>
+                        </span>
+                    </div>
+                ) : (response.type == 'json' ? (
+                    <div class="response-json scrollbox">
+                        <JSONViewer json={response.getBody()} collapsible="true" />
+                    </div>
+                ) : (response.type == 'xml' ? (
+                    <div class="response-xml scrollbox">
+                        <XMLViewer xml={response.getBody()} theme={xmlViewerTheme} collapsible="true" />
+                    </div>
+                ) : (response.type == 'imageUrl' ? (
+                    <img src={response.url}/>
+                ) : (response.type == 'audioUrl' ? (
+                    <Player url={response.url}/>
+                ) : (response.type == 'fileUrl' ? (
+                    <div>file download</div>
+                ) : (
+                    <div>default TODO: insert help text</div>
+                ))))))}
+            </div>
+        )}
     </div>
 )
 

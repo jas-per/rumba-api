@@ -20,7 +20,12 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
                             }}>
                 <span class="indent">{indent}</span>
                 <span>
-                    {name && `"${name}": `}
+                    {collapsible && itemCount ? (
+                        <span class={`${collapsed ? 'fold-open' : 'fold-close'}`} ></span>
+                    ) : (
+                        <span class="foldIndent">  </span>
+                    )}
+                    {name && <><span class="property-name">"{name}"</span><span>: </span></>}
                     {"["}
                 </span>
                 {collapsed && (
@@ -29,7 +34,7 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
                     </span>
                 )}
                 {(collapsed || !itemCount) && (
-                    <span>{" ]"}</span>
+                    <span>{" ]"}{moreSiblings && ","}</span>
                 )}
             </div>
             {!collapsed && json.map((element, index) => (
@@ -51,17 +56,17 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
                     ) : (
                         <ValueJson  name={key}
                                     json={element} 
-                                    indent={indent + ' '.repeat(indentIncr)}
+                                    indent={indent + ' '.repeat(indentIncr+2)}
                                     moreSiblings={index < itemCount}
                                     />
                     ))}
                 </>
             ))}
-            {!collapsed && (
+            {(!collapsed && !!itemCount) && (
                 <div style={{ cursor: 'text'  }}>
                     <span class="indent">{indent}</span>
                     <span>
-                        {']'}
+                        {"  ]"}
                         {moreSiblings && ","}
                     </span>
                 </div>
