@@ -19,7 +19,7 @@ const Response = observer(({ response, pending }) =>
         <Card>
             <Card.Header id="response-url">
                 <span>
-                    <BsBullseye/> url: 
+                    <BsBullseye /> url: 
                 </span>
                 <span >
                     {response.url}
@@ -34,7 +34,7 @@ const Response = observer(({ response, pending }) =>
             <div id="response-body">
                 {response.type == 'none' ? (
                     <div class="response-none">
-                        <BsChevronDoubleLeft/>
+                        <BsChevronDoubleLeft />
                         <span>
                             <div>please use left menu</div>
                             <div>to call api endpoints</div>
@@ -49,9 +49,9 @@ const Response = observer(({ response, pending }) =>
                         <XMLViewer xml={response.getBody()} theme={xmlViewerTheme} collapsible="true" />
                     </div>
                 ) : (response.type == 'imageUrl' ? (
-                    <img src={response.url}/>
+                    <img src={response.url} />
                 ) : (response.type == 'audioUrl' ? (
-                    <Player url={response.url}/>
+                    <Player url={response.url} />
                 ) : (response.type == 'fileUrl' ? (
                     <div>file download</div>
                 ) : (

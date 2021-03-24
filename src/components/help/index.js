@@ -6,7 +6,7 @@ import './index.css';
 const Help = observer(({ toggle, showing }) => (
 
     <div id="help-button" onClick={toggle}>
-        {showing ? <BsChevronDoubleLeft/> : <BsChevronDoubleRight/>}
+        {showing ? <BsChevronDoubleLeft /> : <BsChevronDoubleRight />}
         <span>help</span>
     </div>
 

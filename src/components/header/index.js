@@ -22,7 +22,7 @@ const Header = observer(({ api, appState, showHelp }) => {
                         {showHeader ? <BsFillCaretDownFill /> : <BsFillCaretRightFill /> } head parameters
                     </Card.Header>
                     <ListGroup variant="flush" className="head-parameter-list">
-                        {api.map((parameter, index) => (
+                        {api.map((parameter) => (
                             <Parameter 
                                 appState={appState.getHeadParameterByName(parameter.name)}
                                 api={parameter}

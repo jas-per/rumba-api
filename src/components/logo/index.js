@@ -9,7 +9,7 @@ const NetworkIndicator = ({serverVersion, requestPending}) => {
     return (
         <div id="logo">
             <img src="/resources/logo.svg" class={`logo-animation ${requestPending ? '' : 'paused'}`} onClick={ () => setShowAbout(true) } />
-            <AboutDialog show={showAbout} closeFn={ () => setShowAbout(false) } serverVersion={serverVersion}/>
+            <AboutDialog show={showAbout} closeFn={ () => setShowAbout(false) } serverVersion={serverVersion} />
         </div>
     )
 }

@@ -21,7 +21,7 @@ const ObjectJson = memo(({ name, json, collapsible, indentSize, indentIncr, more
                 <span class="indent">{indent}</span>
                 <span>
                     {collapsible && propCount ? (
-                        <span class={`${collapsed ? 'fold-open' : 'fold-close'}`} ></span>
+                        <span class={`${collapsed ? 'fold-open' : 'fold-close'}`} />
                     ) : (
                         <span class="foldIndent">  </span>
                     )}

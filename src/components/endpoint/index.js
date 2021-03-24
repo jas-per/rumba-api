@@ -49,7 +49,7 @@ const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetc
 								<Col className="help-col" />
 							</Form.Row>
 							<div class="parameters-list">
-								{api.parameters.map((parameter, index) => (
+								{api.parameters.map((parameter) => (
 									<Parameter 
 										appState={appState.getParameterByName(parameter.name)}
 										api={parameter}

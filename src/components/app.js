@@ -30,7 +30,7 @@ const App = observer(({ api, appState }) => {
 					<Card.Header className="logo-header">
 						<NetworkIndicator serverVersion={api.version} requestPending={appState.requestPending} />
 						<h2>Request</h2>
-						<Help toggle={toggleHelp} showing={showHelp}/>
+						<Help toggle={toggleHelp} showing={showHelp} />
 					</Card.Header>
 					{/* head parameters */}
 					<Header api={api.header}
@@ -69,7 +69,7 @@ const App = observer(({ api, appState }) => {
 					<Card.Header className="logo-header">
 						<h2>Response</h2>
 					</Card.Header>
-					<Response response={appState.response} pending={appState.requestPending}/>
+					<Response response={appState.response} pending={appState.requestPending} />
 				</Card>
 			</div>
 		</div>

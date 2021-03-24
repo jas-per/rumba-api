@@ -30,7 +30,7 @@ if (window.localStorage) {
         appState = AppStore.create(snapshot)
     }
     // register handler to take snapshot on unload
-    window.addEventListener("unload", function(){
+    window.addEventListener("unload", () => {
         if(!window.clearLocalStorage){
             try {
                 localStorage.setItem('snapshot', JSON.stringify(getSnapshot(appState)));
@@ -47,6 +47,6 @@ if (window.localStorage) {
 }
 
 ReactDOM.render(
-    React.createElement(App, {api: apiJSON, appState: appState}),
+    React.createElement(App, {api: apiJSON, appState}),
     document.getElementById('content')
 );

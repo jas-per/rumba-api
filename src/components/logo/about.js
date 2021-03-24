@@ -1,5 +1,7 @@
 import { Modal, Button } from 'react-bootstrap'
 
+/* global APP_META */
+
 const AboutDialog = ({ show, closeFn, serverVersion }) => 
     <Modal show={show} onHide={closeFn} dialogClassName="modal-about">
         <Modal.Header closeButton>
@@ -26,7 +28,7 @@ const AboutDialog = ({ show, closeFn, serverVersion }) =>
             </div>
             </div>
             <div>
-            {APP_META.description} (use the <a href={APP_META.homepage} target="_blank" rel="noopener noreferrer">rum.ba server</a> or the original <a href="http://www.subsonic.org/pages/index.jsp" target="_blank">SubSonic Server</a>)
+            {APP_META.description} (use the <a href={APP_META.homepage} target="_blank" rel="noopener noreferrer">rum.ba server</a> or the original <a href="http://www.subsonic.org/pages/index.jsp" target="_blank" rel="noopener noreferrer">SubSonic Server</a>)
             </div>
             <div>
             Server-Api version: {serverVersion}

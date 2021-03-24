@@ -45,7 +45,7 @@ const Category = observer(({ api, appState, isMinimized, showEndpoints, showHelp
 				)}>
 				<Card.Header 
 					className="category-header"
-					onClick={(event) => {
+					onClick={() => {
 						toggleActiveCategory(api.name)
 						document.getElementById('api-panel').scrollTop = 0
 					}}>

@@ -21,7 +21,7 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
                 <span class="indent">{indent}</span>
                 <span>
                     {collapsible && itemCount ? (
-                        <span class={`${collapsed ? 'fold-open' : 'fold-close'}`} ></span>
+                        <span class={`${collapsed ? 'fold-open' : 'fold-close'}`} />
                     ) : (
                         <span class="foldIndent">  </span>
                     )}
@@ -46,7 +46,7 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
                                     indentIncr={indentIncr}
                                     moreSiblings={index < itemCount -1}
                                     />
-                    ) : ((Array.isArray(json[key])) ? (
+                    ) : ((Array.isArray(json[index])) ? (
                         <ArrayJson  json={element}
                                     collapsible={collapsible}
                                     indentSize={indentSize + indentIncr}
@@ -54,7 +54,7 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
                                     moreSiblings={index < itemCount -1}
                                     />
                     ) : (
-                        <ValueJson  name={key}
+                        <ValueJson  name={index}
                                     json={element} 
                                     indent={indent + ' '.repeat(indentIncr+2)}
                                     moreSiblings={index < itemCount}

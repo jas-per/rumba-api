@@ -6,7 +6,7 @@ import './index.css'
 
 const EndpointList = observer(({ api, appState, showHelp, fetchEndpoint }) => 
     <ListGroup variant="flush" className="category-endpoints">
-        {api.map((endpoint, index) => (
+        {api.map((endpoint) => (
             <Endpoint 
                 api={endpoint}
                 appState={appState.getEndpointByName(endpoint.name)}

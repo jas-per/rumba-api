@@ -6,7 +6,7 @@ import './index.css'
 
 const CategoryList = observer(({ api, appState, showHelp }) => 
 	<ListGroup variant="flush" id="categorys-panel">
-		{api.map((category, index) => (
+		{api.map((category) => (
 			<Category
 				api={category}
 				appState={appState.getCategoryByName(category.name)}

@@ -62,7 +62,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getIndexes',
 					hint: 'Returns an indexed (A-Z) structure of all "artists" - the top-level folders inside your music folders',
-				  	parameters: [
+					parameters: [
 						{	name: 'musicFolderId',
 							hint: 'If specified, only return artists in the music folder with the given ID',
 							required: false,
@@ -75,11 +75,11 @@ const apiJSON = {
 							type: 'int',
 							min: 0
 						}
-				  	]
+					]
 				},
 				{ 	name: 'getMusicDirectory',
 					hint: 'Returns a listing of all files in a music directory. Typically used to get list of albums for an artist, or list of songs for an album',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'A string which uniquely identifies the music folder. Obtained by calls to getIndexes or getMusicDirectory',
 							required: true,
@@ -100,11 +100,11 @@ const apiJSON = {
 							type: 'int',
 							min: 0
 						}
-				  	]
+					]
 				},
 				{ 	name: 'getArtist',
 					hint: 'Returns details for an artist, including a list of albums. Organizes music according to ID3 tags',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The artist ID',
 							required: true,
@@ -115,7 +115,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getAlbum',
 					hint: 'Returns details for an album, including a list of songs. Organizes music according to ID3 tags. ',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The album ID',
 							required: true,
@@ -126,7 +126,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getSong',
 					hint: 'Returns details for a song',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The song ID',
 							required: true,
@@ -141,7 +141,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getVideoInfo',
 					hint: 'Returns details for a video, including information about available audio tracks, subtitles (captions) and conversions',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The video ID',
 							required: true,
@@ -153,7 +153,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getArtistInfo',
 					hint: 'Returns artist info with biography, image URLs and similar artists, using data from last.fm',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The artist (ar-XX), album (al-XX) or song ID',
 							required: true,
@@ -177,7 +177,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getArtistInfo2',
 					hint: 'use ID3 tag - returns artist info with biography, image URLs and similar artists, using data from last.fm.',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The artist ID',
 							required: true,
@@ -202,7 +202,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getAlbumInfo',
 					hint: 'Returns album notes, image URLs etc, using data from last.fm',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The album (al-XX) or song ID',
 							required: true,
@@ -225,7 +225,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getSimilarSongs',
 					hint: 'Returns a random collection of songs from the given artist and similar artists, using data from last.fm. Typically used for artist radio features',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The artist (ar-XX), album (al-XX) or song ID',
 							required: true,
@@ -243,7 +243,7 @@ const apiJSON = {
 				},
 				{ 	name: 'getSimilarSongs2',
 					hint: 'use ID3 tag - returns a random collection of songs from the given artist and similar artists, using data from last.fm. Typically used for artist radio features',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The artist ID',
 							required: true,
@@ -1062,7 +1062,7 @@ const apiJSON = {
 				},
 				{ 	name: 'createShare',
 					hint: 'Creates a public URL that can be used by anyone to stream music or video from the server. The URL is short and suitable for posting on social media',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'ID(s) of songs, albums or videos to share',
 							required: true,
@@ -1080,13 +1080,13 @@ const apiJSON = {
 							type: 'int',
 							min: 0
 						}
-				  	],
+					],
 					role: 'share',
 					compat: 'not implemented yet'
 				},
 				{ 	name: 'updateShare',
 					hint: 'Updates the description and/or expiration date for an existing share',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'ID of the share to update',
 							required: true,
@@ -1104,13 +1104,13 @@ const apiJSON = {
 							type: 'int',
 							min: 0
 						}
-				  	],
+					],
 					role: 'share',
 					compat: 'not implemented yet'
 				},
 				{ 	name: 'deleteShare',
 					hint: 'Deletes an existing share',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'ID of the share to delete',
 							required: true,
@@ -1128,7 +1128,7 @@ const apiJSON = {
 			endpoints: [
 				{ 	name: 'getPodcasts',
 					hint: 'Returns all Podcast channels the server subscribes to, and (optionally) their episodes. This method can also be used to return details for only one channel - refer to the id parameter. A typical use case for this method would be to first retrieve all channels without episodes, and then retrieve all episodes for the single channel the user select',
-				  	parameters: [
+					parameters: [
 						{	name: 'includeEpisodes',
 							hint: 'Whether to include Podcast episodes in the returned result',
 							required: false,
@@ -1141,12 +1141,12 @@ const apiJSON = {
 							type: 'int',
 							min: 0
 						}
-				  	],
+					],
 					compat: 'not implemented yet'
 				},
 				{ 	name: 'getNewestPodcasts',
 					hint: 'Returns the most recently published Podcast episodes',
-				  	parameters: [
+					parameters: [
 						{	name: 'count',
 							hint: 'The maximum number of episodes to return',
 							required: false,
@@ -1163,7 +1163,7 @@ const apiJSON = {
 				},
 				{ 	name: 'createPodcastChannel',
 					hint: 'Adds a new Podcast channel',
-				  	parameters: [
+					parameters: [
 						{	name: 'url',
 							hint: 'The URL of the Podcast to add',
 							required: true,
@@ -1175,7 +1175,7 @@ const apiJSON = {
 				},
 				{ 	name: 'deletePodcastChannel',
 					hint: 'Deletes a Podcast channel',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The ID of the Podcast channel to delete',
 							required: true,
@@ -1188,7 +1188,7 @@ const apiJSON = {
 				},
 				{ 	name: 'deletePodcastEpisode',
 					hint: 'Deletes a Podcast episode',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The ID of the Podcast episode to delete',
 							required: true,
@@ -1201,7 +1201,7 @@ const apiJSON = {
 				},
 				{ 	name: 'downloadPodcastEpisode',
 					hint: 'Request the server to start downloading a given Podcast episode',
-				  	parameters: [
+					parameters: [
 						{	name: 'id',
 							hint: 'The ID of the Podcast episode to download',
 							required: true,

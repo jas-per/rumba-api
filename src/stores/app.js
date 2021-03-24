@@ -51,7 +51,7 @@ const Category = types.model({
 
     toggleActiveEndpoint(endpointName) {
         self.endpoints.forEach((endpoint) => {
-            endpoint.active = (endpoint.name == endpointName && !endpoint.active) ? true : false
+            endpoint.active = (endpoint.name == endpointName && !endpoint.active)
         });
     }
 
@@ -90,11 +90,7 @@ const Response = types.model({
 })).views(self => ({
 
     getBody(){
-        if (self.type == 'json') {
-            return JSON.parse(self.body)
-        } else {
-            return self.body
-        }
+        return (self.type == 'json') ? JSON.parse(self.body) : self.body
     }
 
 }))
@@ -117,7 +113,7 @@ const AppStore = types.model({
 
     toggleActiveCategory(categoryName) {
         self.categories.forEach((category) => {
-            category.active = (category.name == categoryName && !category.active) ? true : false
+            category.active = (category.name == categoryName && !category.active)
         });
     },
 
