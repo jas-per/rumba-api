@@ -23,11 +23,16 @@
     "extends": "preact",
     "ignorePatterns": [
       "build/"
-    ]
+    ],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn"
+    }
   },
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-config-preact": "^1.1.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "@babel/core": "^7.12.0",
     "@babel/plugin-transform-react-jsx": "^7.12.0",
     "@babel/preset-env": "^7.12.0",
@@ -54,6 +59,7 @@
     "mobx-react-lite": "^3.2.0",
     "mobx-state-tree": "^5.0.1",
     "preact": "^10.3.2",
+    "rc-slider": "^9.7.2",
     "react-bootstrap": "^1.5.0",
     "react-icons": "^4.2.0",
     "react-xml-viewer": "^1.3.0"
