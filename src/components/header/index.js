@@ -30,6 +30,7 @@ const Header = observer(({ api, appState, showHelp }) => {
                             />
                         ))}
                     </ListGroup>
+                    {showHeader && <Card.Footer />}
                 </Card>
             </div>
         </ListGroup>
