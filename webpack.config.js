@@ -37,7 +37,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     app: { import: './index.js', dependOn: 'common' },
-    common: ['preact','mobx','mobx-react-lite','mobx-state-tree','react-bootstrap','react-icons','react-icons/bs','react-xml-viewer'],
+    common: ['preact','mobx','mobx-react-lite','mobx-state-tree','react-bootstrap','react-xml-viewer'],
   },
   optimization: {
     splitChunks: {

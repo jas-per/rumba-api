@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { ListGroup, Card } from 'react-bootstrap'
-import { BsFillCaretRightFill,BsFillCaretDownFill } from 'react-icons/bs'
+import { CaretRightIcon, CaretDownIcon } from '/icons'
 import Parameter from '/components/parameter'
 import './index.css'
 
@@ -19,7 +19,7 @@ const Header = observer(({ api, appState, showHelp }) => {
             <div class={`head-parameters category-panel list-group-item ${showHeader ? 'with-overlay' :''}`} onClick={toggleHeader}>
                 <Card className="category-card">
                     <Card.Header className="category-header" >
-                        {showHeader ? <BsFillCaretDownFill /> : <BsFillCaretRightFill /> } head parameters
+                        {showHeader ? <CaretDownIcon /> : <CaretRightIcon /> } head parameters
                     </Card.Header>
                     <ListGroup variant="flush" className="head-parameter-list">
                         {api.map((parameter) => (

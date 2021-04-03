@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { ListGroup, Card, Form, Col, Button } from 'react-bootstrap';
-import { BsFillCaretRightFill,BsFillCaretDownFill } from "react-icons/bs";
+import { CaretRightIcon, CaretDownIcon } from '/icons'
 import Parameter from '/components/parameter';
 import './index.css';
 
@@ -15,7 +15,7 @@ const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetc
 	<ListGroup.Item className={`endpoint-panel ${appState.active ? 'active' : ''}`}>
 		<Card className="endpoint-card">
 			<Card.Header className="endpoint-header" onClick={() => toggleActiveEndpoint(api.name)}>
-				{appState.active ? <BsFillCaretDownFill /> : <BsFillCaretRightFill /> } {api.name}
+				{appState.active ? <CaretDownIcon /> : <CaretRightIcon /> } {api.name}
 			</Card.Header>
 			{showHelp && (
 				<div class="help-text">

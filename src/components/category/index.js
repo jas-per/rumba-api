@@ -1,28 +1,28 @@
 import { observer } from 'mobx-react-lite'
 import { ListGroup, Card, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { BsGear, BsFolder, BsBook, BsCardList, BsSearch, BsCollectionPlay, BsFileArrowDown, BsReplyAll, BsStar, BsMic, BsVolumeUp, BsWifi, BsChatDots, BsPeople, BsBookmark, BsFillAlarmFill } from "react-icons/bs"
+import { GearIcon, FolderIcon, BookIcon, ListIcon, SearchIcon, PlaylistIcon, DownloadIcon, StarIcon, ShareIcon, MicIcon, JukeboxIcon, WifiIcon, ChatIcon, UsersIcon, BookmarksIcon, MuteIcon } from '/icons'
 import { EndpointList } from '/components/endpoint'
 import './index.css'
 
 
 const renderIcon = (categoryName) => {
 	switch(categoryName) {
-	  case 'System':			return <BsGear />
-	  case 'Browsing':			return <BsFolder />
-	  case 'Library':			return <BsBook />
-	  case 'AlbumSongLists':	return <BsCardList />
-	  case 'Searching':			return <BsSearch />
-	  case 'Playlists':			return <BsCollectionPlay />
-	  case 'MediaRetrieval':	return <BsFileArrowDown />
-	  case 'MediaAnnotation':	return <BsStar />
-	  case 'Sharing':			return <BsReplyAll />
-	  case 'Podcast':			return <BsMic />
-	  case 'Jukebox':			return <BsVolumeUp />
-	  case 'InternetRadio':		return <BsWifi />
-	  case 'Chat':				return <BsChatDots />
-	  case 'UserManagement':	return <BsPeople />
-	  case 'Bookmarks':			return <BsBookmark />
-	  default:					return <BsFillAlarmFill />
+	  case 'System':			return <GearIcon />
+	  case 'Browsing':			return <FolderIcon />
+	  case 'Library':			return <BookIcon />
+	  case 'AlbumSongLists':	return <ListIcon />
+	  case 'Searching':			return <SearchIcon />
+	  case 'Playlists':			return <PlaylistIcon />
+	  case 'MediaRetrieval':	return <DownloadIcon />
+	  case 'MediaAnnotation':	return <StarIcon />
+	  case 'Sharing':			return <ShareIcon />
+	  case 'Podcast':			return <MicIcon />
+	  case 'Jukebox':			return <JukeboxIcon />
+	  case 'InternetRadio':		return <WifiIcon />
+	  case 'Chat':				return <ChatIcon />
+	  case 'UserManagement':	return <UsersIcon />
+	  case 'Bookmarks':			return <BookmarksIcon />
+	  default:					return <MuteIcon />
 	}
 }
 

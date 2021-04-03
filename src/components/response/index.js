@@ -1,9 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { Card } from 'react-bootstrap'
-import { BsChevronDoubleLeft,BsBullseye } from 'react-icons/bs'
+import { DoubleLeftIcon, BullseyeIcon } from '/icons'
 import XMLViewer from 'react-xml-viewer'
 import JSONViewer from './json-viewer'
-import Player from '/components/audio'
+import Player from '/components/player'
 import './index.css'
 
 const xmlViewerTheme = {
@@ -19,7 +19,7 @@ const Response = observer(({ response, pending }) =>
         <Card>
             <Card.Header id="response-url">
                 <span>
-                    <BsBullseye /> url: 
+                    <BullseyeIcon /> url: 
                 </span>
                 <span >
                     {response.url}
@@ -34,7 +34,7 @@ const Response = observer(({ response, pending }) =>
             <div id="response-body">
                 {response.type == 'none' ? (
                     <div class="response-none">
-                        <BsChevronDoubleLeft />
+                        <DoubleLeftIcon />
                         <span>
                             <div>please use left menu</div>
                             <div>to call api endpoints</div>
@@ -51,7 +51,9 @@ const Response = observer(({ response, pending }) =>
                 ) : (response.type == 'imageUrl' ? (
                     <img src={response.url} />
                 ) : (response.type == 'audioUrl' ? (
-                    <Player url={response.url} />
+                    <Card>
+                        <Player url={response.url} />
+                    </Card>
                 ) : (response.type == 'fileUrl' ? (
                     <div>file download</div>
                 ) : (

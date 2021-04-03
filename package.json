@@ -54,7 +54,6 @@
     "webpack-bundle-analyzer": "^4.4.0"
   },
   "dependencies": {
-    "bootstrap-icons": "^1.4.0",
     "mobx": "^6.1.7",
     "mobx-react-lite": "^3.2.0",
     "mobx-state-tree": "^5.0.1",
