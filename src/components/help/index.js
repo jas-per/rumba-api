@@ -1,15 +1,15 @@
 import { observer } from 'mobx-react-lite'
-import { BsChevronDoubleLeft,BsChevronDoubleRight } from 'react-icons/bs'
-import './index.css';
+import { DoubleLeftIcon, DoubleRightIcon } from '/icons'
+import './index.css'
 
 
 const Help = observer(({ toggle, showing }) => (
 
     <div id="help-button" onClick={toggle}>
-        {showing ? <BsChevronDoubleLeft /> : <BsChevronDoubleRight />}
+        {showing ? <DoubleLeftIcon /> : <DoubleRightIcon />}
         <span>help</span>
     </div>
 
 ))
 
-export default Help;
+export default Help
