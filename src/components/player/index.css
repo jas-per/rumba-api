@@ -1,0 +1,116 @@
+#play-pane {
+	background-color: rgba(0, 0, 0, 0.03);
+}
+.player-header {
+	border: none;
+	padding: 0.2em 1em;
+	border-radius: 0;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	font-weight: bold;
+	justify-content: center;
+	max-width: 800px;
+}
+#controls-main {
+	flex: 100 1 auto;
+}
+#controls-main > div.playtime {
+	display: flex;
+}
+div.playtime > span.time {
+	font-weight: normal;
+	font-size: 12px;
+	margin-top: 2px;
+	width: 36px;
+	text-align: right;
+}
+.playtime-slider{
+	margin: 7px 10px;
+	border-bottom: 1px solid #EFEFEF;
+	background: transparent linear-gradient(to bottom, #8C8683, #B3ABA7);
+}
+.playtime-slider > .rc-slider-track{
+	border-bottom: 1px solid #EFEFEF;
+}
+#controls-volume {
+	display: flex;
+	align-items: center;
+}
+.volume-slider{
+	margin: 12px 10px;
+	height: 38px;
+	width: 4px;
+}
+.player-icons {
+	display: flex;
+	align-items: baseline;
+	margin-bottom: 3px;
+}
+.player-middle {
+	flex: 1 1 auto;
+	text-align: center;
+}
+.player-icons .icon,
+.player-icons .main-icon {
+	font-size: 16px;
+	margin-left: 12px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+.player-icons .icon.disabled{
+	color: #777;
+}
+.player-icons .main-icon{
+	font-size: 28px;
+}
+.player-header .dropdown-menu {
+	min-width: 54px;
+	padding: 0.2em 0;
+}
+.player-header .dropdown-header {
+	padding: 0.1em 0.75em;
+}
+.player-header .dropdown-item {
+	padding: 0.1em 0.75em;
+}
+.player-header .dropdown{
+	outline: 0px none;
+}
+.dropleft > a, .dropleft > a:hover {
+	color: #444;
+}
+#video-player-pane > video {
+	height: 400px;
+}
+#video-player-pane {
+	display: none;
+	text-align: center;
+}
+#video-player-pane.with-video-pane {
+	display: block;
+	margin-top: 0.5em;
+}
+.player-footer {
+	margin-top: 0.5em;
+}
+.big-button-overlay {
+	width: 64px;
+	height: 64px;
+	background: #cfe6ad;
+    border-radius: 50%;
+	border: 1px solid #a5c87177;
+	cursor: pointer;
+	z-index: 3;
+	position: absolute;
+	left: calc(50% - 32px);
+	top: calc(50% - 12px);
+	display: none;
+}
+#video-player-pane > video:hover + .big-button-overlay {
+	display: block;
+}
+.big-button-overlay > svg {
+	color: #444c;
+	font-size: 62px;
+}
