@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react'
 
 const useVideo = url => {
 	const video = useRef()
+	const [errorMsg, setErrorMsg] = useState(false)
+	const [isLoading, setLoading] = useState(false)
 	const [isPlaying, setPlaying] = useState(false)
 	const [muted, setMuted] = useState(false)
 	const [volume, updateVolume] = useState(100)
@@ -23,6 +25,7 @@ const useVideo = url => {
 	)
 	useEffect(() => {
 			setPlaying(false)
+			setLoading(true)
 			video.current.src = url
 		},
 		[url]
@@ -43,6 +46,8 @@ const useVideo = url => {
 		listeners.loadeddata = function() {
 			setDuration(Math.round(videoElem.duration))
 			setAudioOnly(!videoElem.videoHeight > 0)
+			setErrorMsg('')
+			setLoading(false)
 			setPlaying(true) // triggers browser-ui, if autoplay is not confirmed for site
 		}
 		listeners.timeupdate = function() {
@@ -50,6 +55,10 @@ const useVideo = url => {
 		}
 		listeners.volumechange = function() {
 			updateVolume(Math.round(videoElem.volume * 100))
+		}
+		listeners.error = function() {
+			setLoading(false)
+			setErrorMsg(videoElem.error.message)
 		}
 		for (const event of Object.keys(listeners)) {
 			videoElem.addEventListener(event, listeners[event])
@@ -78,7 +87,9 @@ const useVideo = url => {
 			},
 			muted,
 			toggleMuted,
-			audioOnly
+			audioOnly,
+			isLoading,
+			errorMsg
 		}
 	]
 }

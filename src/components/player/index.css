@@ -58,7 +58,8 @@ div.playtime > span.time {
 	vertical-align: middle;
 	cursor: pointer;
 }
-.player-icons .icon.disabled{
+.player-icons .icon.disabled,
+.player-icons .main-icon.disabled {
 	color: #777;
 }
 .player-icons .main-icon{

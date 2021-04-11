@@ -28,7 +28,7 @@ const App = observer(({ api, appState }) => {
 				<Card id="request-panel" className={`${showHelp ? 'col-7' : 'col-4'}`}>
 					{/* header */}
 					<Card.Header className="logo-header">
-						<NetworkIndicator serverVersion={api.version} requestPending={appState.requestPending} />
+						<NetworkIndicator serverVersion={api.version} responsePending={appState.response.pending} />
 						<h2>Request</h2>
 						<Help toggle={toggleHelp} showing={showHelp} />
 					</Card.Header>
@@ -69,7 +69,7 @@ const App = observer(({ api, appState }) => {
 					<Card.Header className="logo-header">
 						<h2>Response</h2>
 					</Card.Header>
-					<Response response={appState.response} pending={appState.requestPending} />
+					<Response response={appState.response} />
 				</Card>
 			</div>
 		</div>

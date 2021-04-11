@@ -70,6 +70,7 @@ const Response = types.model({
     url:    '',
     body:   '',
     type:   'none',
+    pending: false,
     error:  false,
 
 }).actions(self => ({
@@ -79,13 +80,60 @@ const Response = types.model({
     },
 
     setBody(newBody, type) {
+        let error = false
         if (type == 'json') {
             self.body = JSON.stringify(newBody)
+            if (newBody['subsonic-response'].status != 'ok') {
+                error = true
+            }
         } else {
             self.body = newBody
+            if (type == 'xml' && /status="(\w+)"/.exec(newBody)[1] != 'ok') {
+                error = true
+            }
         }
         self.type = type
-    }
+        self.error = error
+    },
+
+    setPending(newState) {
+        self.pending = newState
+    },
+
+    setError: flow(function* (newState, errorMsg) {
+        self.error = newState
+        // reload error-json when request for image or stream fails (no XHR used for those and no way to access original error json) 
+        if ( newState && (self.type == 'imageUrl' || self.type == 'audioUrl')) {
+            yield self.fetchUrl(self.url)
+        }
+    }),
+
+    fetchUrl: flow(function* (requestUrl) {
+        self.pending = true
+        try {
+            const response = yield fetch(requestUrl, {credentials: 'omit'})
+            if (!response.ok) {
+                throw new Error(yield response.text());
+            }
+            if (response.headers.get('Content-Type').includes('json')) {
+                self.setBody( yield response.json(), 'json')
+            } else {
+                let newType = (response.headers.get('Content-Type').includes('xml')) ? 'xml' : 'text'
+                self.setBody( yield response.text(), newType)
+            }
+            self.url = response.url
+        } catch (error) {
+            try {
+                // html error page from server (404 etc)
+                self.setBody(/<body>([\s\S]+)<\/body>/.exec(error)[1], 'html')
+            } catch (e) {
+                // sometimes its impossible to get a proper reason from the browser eg intentionally when using cors 
+                self.setBody(`Server not found?!\n${error}`, 'text')
+            }
+            self.error = true
+        }
+        self.pending = false
+    })
 
 })).views(self => ({
 
@@ -102,13 +150,16 @@ const AppStore = types.model({
     categories:     types.array(Category),
     header:         types.array(Parameter),
     version:        types.string,
-    requestPending: false,
     response:       types.maybe(Response),
 
 }).actions(self => ({
 
     initResponse() {
         self.response = Response.create()
+    },
+
+    cancelPendingRequest() {
+        self.response.setPending(false)
     },
 
     toggleActiveCategory(categoryName) {
@@ -118,10 +169,10 @@ const AppStore = types.model({
     },
 
     fetchEndpoint: flow(function* (endpoint, parameters) {
-        if (self.requestPending) return
+        if (self.response.pending) return
+        // create request url
         let requestUrl = '', headParameters = ''
-        // transfer head parameters
-        self.header.forEach((parameter) => {
+        self.header.forEach((parameter) => { // transfer head parameters
             if (['c','v','f','u','p'].includes(parameter.name.charAt(0))) {
                 headParameters += `${parameter.name.charAt(0)}=${parameter.value}&`
             } else if (parameter.name == 'server') {
@@ -133,7 +184,11 @@ const AppStore = types.model({
         }
         requestUrl = `${requestUrl}/rest/${endpoint}.view?${headParameters}${parameters}`
 
-        if (['getCoverArt','stream','download'].includes(endpoint)){
+        if (['getCoverArt','stream','download'].includes(endpoint)) {
+            self.response.error = false
+            if (self.response.url != requestUrl && endpoint != 'download') {
+                self.response.pending = true
+            }
             self.response.url = requestUrl
             if (endpoint == 'getCoverArt') {
                 self.response.type = 'imageUrl'
@@ -141,27 +196,11 @@ const AppStore = types.model({
                 self.response.type = 'audioUrl'
             } else {
                 self.response.type = 'fileUrl'
+                //  TODO mit iFrame ausprobieren, vielleicht geht dann auch onLoad!?
                 window.location.href = requestUrl
             }
         } else {
-            self.requestPending = true
-            try {
-                const response = yield fetch(requestUrl, {credentials: 'omit'})
-                if (!response.ok) {
-                    throw new Error('Server error', response);
-                }
-                self.response.url = response.url
-                if (response.headers.get('Content-Type').includes('json')) {
-                    self.response.setBody( yield response.json(), 'json')
-                } else {
-                    let newType = (response.headers.get('Content-Type').includes('xml')) ? 'xml' : 'text'
-                    self.response.setBody( yield response.text(), newType)
-                }
-            } catch (error) {
-                // TODO: error handling including subsonic error responses
-                console.error("Failed to fetch", error)
-            }
-            self.requestPending = false
+            yield self.response.fetchUrl(requestUrl)
         }
     })
 

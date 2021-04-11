@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite'
+import { useEffect } from 'react'
 import useVideo from './video.js'
 import PlayerControl from './playerControl'
 import ModeControl from './modeControl'
@@ -9,9 +10,21 @@ import { PauseIcon, PlayIcon } from '/icons'
 import './index.css'
 
 
-const Player = observer(({ url }) => {
+const Player = observer(({ url, onError, onLoad }) => {
 	const [videoElement, video]  = useVideo(url);
 
+	useEffect(() => {
+			onError((video.errorMsg != ''), video.errorMsg)
+		},
+		[video.errorMsg]
+	)
+
+	useEffect(() => {
+			onLoad(video.isLoading)
+		},
+		[video.isLoading]
+	)
+	
 	return (
 		<div id="play-pane">
 			<div className="player-header">
@@ -30,6 +43,7 @@ const Player = observer(({ url }) => {
 											video.setPlaying(false)
 											video.changePlaytime(0)
 										}}
+										hasSource={!video.hasError}
 										hasPrev={false}
 										setPrev={()=>{}}
 										hasNext={false}

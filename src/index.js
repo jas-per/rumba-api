@@ -17,7 +17,7 @@ let appState = AppStore.create(apiJSON)
 apiJSON.header.forEach((headParameter) => {
     appState.getHeadParameterByName(headParameter.name).setValue(headParameter.default)
 });
-// init with empty response
+// start with empty response
 appState.initResponse()
 
 // localStorage.clear();
@@ -33,6 +33,7 @@ if (window.localStorage) {
     window.addEventListener("unload", () => {
         if(!window.clearLocalStorage){
             try {
+                appState.cancelPendingRequest()
                 localStorage.setItem('snapshot', JSON.stringify(getSnapshot(appState)));
             } catch(domException) {
                 if (domException.name === 'QuotaExceededError' ||
