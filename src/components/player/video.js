@@ -26,7 +26,7 @@ const useVideo = url => {
 	useEffect(() => {
 			setPlaying(false)
 			setLoading(true)
-			video.current.src = url
+			video.current.src = url.get()
 		},
 		[url]
 	)
@@ -94,4 +94,4 @@ const useVideo = url => {
 	]
 }
 
-export default useVideo;
+export default useVideo

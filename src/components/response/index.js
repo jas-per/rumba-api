@@ -3,6 +3,8 @@ import { Card } from 'react-bootstrap'
 import { DoubleLeftIcon, BullseyeIcon, AlertIcon } from '/icons'
 import XMLViewer from 'react-xml-viewer'
 import JSONViewer from './json-viewer'
+import Download from './download'
+import Image from './image'
 import Player from '/components/player'
 import './index.css'
 
@@ -21,9 +23,30 @@ const Response = observer(({ response }) =>
                 <span>
                     {response.error ? <AlertIcon /> : <BullseyeIcon />} url: 
                 </span>
-                <span >
-                    {response.url}
-                </span>
+                { response.type != 'none' && (
+                    <>
+                    <span class="url-base">
+                        {response.url.base}
+                    </span>
+                    <span class="url-fill">
+                        /rest/
+                    </span>
+                    <span class="url-endpoint">
+                        {response.url.endpoint}
+                    </span>
+                    <span class="url-fill">
+                        .view?
+                    </span>
+                    <span class="url-headparams">
+                        {response.url.headparams}
+                    </span>
+                    {response.url.query && (
+                        <span class="url-query">
+                            &{response.url.query}
+                        </span>
+                    )}
+                    </>
+                )}
             </Card.Header>
         </Card>
         <div id="response-body">
@@ -47,20 +70,21 @@ const Response = observer(({ response }) =>
                 </div>
 
             ) : (response.type == 'imageUrl' ? (
-                <img    onerror={() => response.setError(true, 'Failed to load image')}
+                <Image  onerror={() => response.setError(true, 'Failed to load image')}
                         onload={() => response.setPending(false)}
-                        src={response.url} />
+                        url={response.url} />
 
             ) : (response.type == 'audioUrl' ? (
-                <Card>
+                <Card className="media-player">
                     <Player url={response.url}
                             onError={response.setError}
                             onLoad={response.setPending} />
                 </Card>
 
             ) : (response.type == 'fileUrl' ? (
-                <div>file download</div>
-
+                <Download   url={response.url}
+                            onerror={() => response.setError(true, 'Failed to load file')}
+                            onload={() => response.setPending(false)} />
             ) : (response.type == 'html' ? (
                 <div class="scrollbox" dangerouslySetInnerHTML={{__html: response.getBody()}} >
                     {/* trusts the servermessages ! */}

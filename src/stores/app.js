@@ -52,7 +52,7 @@ const Category = types.model({
     toggleActiveEndpoint(endpointName) {
         self.endpoints.forEach((endpoint) => {
             endpoint.active = (endpoint.name == endpointName && !endpoint.active)
-        });
+        })
     }
 
 })).views(self => ({
@@ -65,12 +65,48 @@ const Category = types.model({
 
 
 
+const Url = types.model({
+
+    base: '',
+    endpoint: '',
+    headparams: '',
+    query: ''
+
+}).actions(self => ({
+
+    setBase(base) {
+        self.base = base
+    },
+    setEndpoint(endpoint) {
+        self.endpoint = endpoint
+    },
+    setHeadparams(headparams) {
+        self.headparams = headparams
+    },
+    setQuery(query) {
+        self.query = query
+    },
+    setUrl(base, endpoint, headparams, query) {
+        self.base = base
+        self.endpoint = endpoint
+        self.headparams = headparams
+        self.query = query
+    }
+
+})).views(self => ({
+
+    get() {
+        return `${self.base}/rest/${self.endpoint}.view?${self.headparams}${self.query != '' ? '&': ''}${self.query}`
+    }
+
+}))
+
 const Response = types.model({
 
-    url:    '',
+    url:    Url,
     body:   '',
     type:   'none',
-    pending: false,
+    pending:false,
     error:  false,
 
 }).actions(self => ({
@@ -101,6 +137,9 @@ const Response = types.model({
     },
 
     setError: flow(function* (newState, errorMsg) {
+        if (errorMsg) {
+            self.setBody(errorMsg, self.type)
+        }
         self.error = newState
         // reload error-json when request for image or stream fails (no XHR used for those and no way to access original error json) 
         if ( newState && (self.type == 'imageUrl' || self.type == 'audioUrl')) {
@@ -111,17 +150,20 @@ const Response = types.model({
     fetchUrl: flow(function* (requestUrl) {
         self.pending = true
         try {
-            const response = yield fetch(requestUrl, {credentials: 'omit'})
+            const response = yield fetch(requestUrl.get(), {credentials: 'omit'})
             if (!response.ok) {
-                throw new Error(yield response.text());
+                throw new Error(yield response.text())
             }
             if (response.headers.get('Content-Type').includes('json')) {
                 self.setBody( yield response.json(), 'json')
+            } else if (response.headers.get('Content-Type').includes('xml')) {
+                self.setBody( yield response.text(), 'xml')
             } else {
-                let newType = (response.headers.get('Content-Type').includes('xml')) ? 'xml' : 'text'
-                self.setBody( yield response.text(), newType)
+                // probably wrong media type
+                self.type = response.headers.get('Content-Type')
+                self.setError(true, `${self.getBody()}\n${response.headers.get('Content-Type')}`)
             }
-            self.url = response.url
+            self.setUrl(requestUrl)
         } catch (error) {
             try {
                 // html error page from server (404 etc)
@@ -155,7 +197,7 @@ const AppStore = types.model({
 }).actions(self => ({
 
     initResponse() {
-        self.response = Response.create()
+        self.response = Response.create({url: {}})
     },
 
     cancelPendingRequest() {
@@ -165,39 +207,36 @@ const AppStore = types.model({
     toggleActiveCategory(categoryName) {
         self.categories.forEach((category) => {
             category.active = (category.name == categoryName && !category.active)
-        });
+        })
     },
 
     fetchEndpoint: flow(function* (endpoint, parameters) {
         if (self.response.pending) return
         // create request url
-        let requestUrl = '', headParameters = ''
+        let headParameters = ''
+        let requestUrl = Url.create()
+        requestUrl.setEndpoint(endpoint)
+        requestUrl.setQuery(parameters)
+
         self.header.forEach((parameter) => { // transfer head parameters
             if (['c','v','f','u','p'].includes(parameter.name.charAt(0))) {
                 headParameters += `${parameter.name.charAt(0)}=${parameter.value}&`
             } else if (parameter.name == 'server') {
-                requestUrl = parameter.value
+                requestUrl.setBase(parameter.value)
             }
-        });
-        if (parameters == '') { // no additional params, remove trailing &
-            headParameters = headParameters.slice(0, -1)
-        }
-        requestUrl = `${requestUrl}/rest/${endpoint}.view?${headParameters}${parameters}`
+        })
+        requestUrl.setHeadparams(headParameters.slice(0, -1)) // remove trailing &
 
         if (['getCoverArt','stream','download'].includes(endpoint)) {
             self.response.error = false
-            if (self.response.url != requestUrl && endpoint != 'download') {
-                self.response.pending = true
-            }
-            self.response.url = requestUrl
+            self.response.pending = true
+            self.response.setUrl(requestUrl)
             if (endpoint == 'getCoverArt') {
                 self.response.type = 'imageUrl'
             } else if (endpoint == 'stream') {
                 self.response.type = 'audioUrl'
             } else {
                 self.response.type = 'fileUrl'
-                //  TODO mit iFrame ausprobieren, vielleicht geht dann auch onLoad!?
-                window.location.href = requestUrl
             }
         } else {
             yield self.response.fetchUrl(requestUrl)
@@ -222,4 +261,4 @@ const AppStore = types.model({
 
 }))
 
-export default AppStore;
+export default AppStore
