@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { getSnapshot } from "mobx-state-tree"
 import App from '/components/app'
 import AppStore from '/stores/app'
-import apiJSON from '/legacyApi'
+import apiJSON from '/stores/legacyApi'
 
 
 // flag used on unload page, is set to true when user wants to reset the form data

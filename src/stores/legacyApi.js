@@ -25,7 +25,7 @@ const apiJSON = {
 			hint: 'Name of the client app',
 			required: true,
 			type: 'string',
-			default: 'API Testapp'
+			default: 'testapi'
 		},
 		{	name: 'f (returnformat)',
 			hint: 'Data format returned by server',
