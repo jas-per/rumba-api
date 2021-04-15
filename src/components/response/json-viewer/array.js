@@ -14,9 +14,9 @@ const ArrayJson = memo(({ name, json, collapsible, indentSize, indentIncr, moreS
             <div style = {{ cursor: (collapsible && itemCount ? 'pointer' : 'text') }}
                  onClick = {(event) => {
                                 if (!collapsible || !itemCount) return
-                                event.stopPropagation();
-                                event.preventDefault();
-                                toggleCollapse(!collapsed);
+                                event.stopPropagation()
+                                event.preventDefault()
+                                toggleCollapse(!collapsed)
                             }}>
                 <span class="indent">{indent}</span>
                 <span>

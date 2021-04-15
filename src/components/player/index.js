@@ -11,7 +11,7 @@ import './index.css'
 
 
 const Player = observer(({ url, onError, onLoad }) => {
-	const [videoElement, video]  = useVideo(url);
+	const [videoElement, video]  = useVideo(url)
 
 	useEffect(() => {
 			onError((video.errorMsg != ''), video.errorMsg)
@@ -83,4 +83,4 @@ const Player = observer(({ url, onError, onLoad }) => {
 	)
 })
 
-export default Player;
+export default Player

@@ -30,7 +30,7 @@ const ConditionalWrapper = ({
     condition,
     wrapper,
     children,
-}) => (condition ? wrapper(children) : children);
+}) => (condition ? wrapper(children) : children)
 
 const Category = observer(({ api, appState, isMinimized, showEndpoints, showHelp, toggleActiveCategory, fetchEndpoint}) => 
 	<ListGroup.Item className={`category-panel ${isMinimized ? 'minimized' : ''} ${appState.active ? 'active' : ''}`}>

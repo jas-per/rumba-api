@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import Slider from 'rc-slider';
+import Slider from 'rc-slider'
 import { MuteIcon, VolumeIcon } from '/icons'
 import './slider.css'
 

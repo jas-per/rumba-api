@@ -1710,6 +1710,6 @@ const apiJSON = {
 			]
 		}
 	]		
-};
+}
 
-export default apiJSON;
+export default apiJSON

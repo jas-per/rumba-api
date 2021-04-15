@@ -1,15 +1,15 @@
-import { observer } from 'mobx-react-lite';
-import { ListGroup, Card, Form, Col, Button } from 'react-bootstrap';
+import { observer } from 'mobx-react-lite'
+import { ListGroup, Card, Form, Col, Button } from 'react-bootstrap'
 import { CaretRightIcon, CaretDownIcon } from '/icons'
-import Parameter from '/components/parameter';
-import './index.css';
+import Parameter from '/components/parameter'
+import './index.css'
 
 const onFormSubmit = (event, fetchEndpoint) => {
-    event.preventDefault();
+    event.preventDefault()
 	fetchEndpoint(	event.target.getAttribute('action'),
 					new URLSearchParams(new FormData(event.target)).toString()
 					)
-};
+}
 
 const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetchEndpoint }) => 
 	<ListGroup.Item className={`endpoint-panel ${appState.active ? 'active' : ''}`}>
@@ -72,7 +72,7 @@ const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetc
 			</Form>
 		</Card>
 	</ListGroup.Item>
-);
+)
 
-export default Endpoint;
+export default Endpoint
 export { default as EndpointList } from './list'

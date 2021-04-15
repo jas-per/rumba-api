@@ -15,4 +15,4 @@ const Time = observer(({ time, showHours }) => {
 	return <span class="time">{display}</span>
 })
 
-export default Time;
+export default Time

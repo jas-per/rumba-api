@@ -35,6 +35,6 @@ const Header = observer(({ api, appState, showHelp }) => {
             </div>
         </ListGroup>
     )
-});
+})
 
 export default Header

@@ -1,8 +1,8 @@
-import ObjectJson from './object';
-import './index.css';
+import ObjectJson from './object'
+import './index.css'
 
 
-const defaultIndentIncr = 2;
+const defaultIndentIncr = 2
 
 const JSONViewer = ({ json, collapsible, indentSize, indentIncr, ...props }) => {
 
@@ -18,5 +18,5 @@ const JSONViewer = ({ json, collapsible, indentSize, indentIncr, ...props }) => 
 
 }
 
-export default JSONViewer;
+export default JSONViewer
 

@@ -8,7 +8,7 @@ const activateInput = (event, appState) => {
 	if (!appState.send) {
 		appState.setSend(true)
 		setTimeout(() => {
-			event.target.children[0].focus();
+			event.target.children[0].focus()
 		}, 0)
 	}
 }

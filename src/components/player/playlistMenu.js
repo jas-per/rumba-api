@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite'
-import { forwardRef } from 'react';
+import { forwardRef } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import { PlaylistIcon } from '/icons'
 
@@ -11,7 +11,7 @@ const CustomToggle = forwardRef(({ children, onClick }, ref) => (
 		}} >
 	  {children}
 	</a>
-  ));
+  ))
 
 const PlaylistMenu = observer(({ playlistID, disabled, getSongIDs, onClear }) => (
 	<Dropdown drop='left' id="pls-actions">
