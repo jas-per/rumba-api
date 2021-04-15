@@ -16,13 +16,13 @@ const Player = observer(({ url, onError, onLoad }) => {
 	useEffect(() => {
 			onError((video.errorMsg != ''), video.errorMsg)
 		},
-		[video.errorMsg]
+		[video.errorMsg, onError]
 	)
 
 	useEffect(() => {
 			onLoad(video.isLoading)
 		},
-		[video.isLoading]
+		[video.isLoading, onLoad]
 	)
 	
 	return (

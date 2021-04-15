@@ -86,8 +86,9 @@ const Response = observer(({ response }) =>
                             onerror={() => response.setError(true, 'Failed to load file')}
                             onload={() => response.setPending(false)} />
             ) : (response.type == 'html' ? (
+                /* eslint-disable-next-line react/no-danger */
                 <div class="scrollbox" dangerouslySetInnerHTML={{__html: response.getBody()}} >
-                    {/* trusts the servermessages ! */}
+                    {/* trusts the servermessages ! pr welcome if you're concerned about xss */}
                 </div>
             ) : (
                 <pre>{response.getBody()}</pre>

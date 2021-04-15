@@ -8,7 +8,7 @@ const Download = observer(({ url, onerror, onload }) => {
             iframe.src = 'about:blank'
             // little timeout to blank src inbetween
             if (url.get()) {
-                setTimeout(function() {
+                setTimeout(() => {
                     iframe.src = url.get()
                 }, 100)
             }
