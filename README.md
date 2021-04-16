@@ -2,6 +2,11 @@
 
 Interactive Api documentation for the [rum.ba](https://rum.ba) jukebox server. Similar to [swagger](https://swagger.io/tools/swagger-ui/) but a bit more specialized in testing a jukebox and the idiosyncrasies of the Subsonic Api. 
 
+<p align="center">
+  <img src="https://github.com/jas-per/luckyLUKS/blob/gh-pages/screencast.gif" width="400" alt="rumba-api with help" />
+  <img src="https://github.com/jas-per/luckyLUKS/blob/gh-pages/screencast.gif" width="400" alt="rumba-api with inline media player" />
+</p>
+
 ## CLI Commands
 
 ``` bash
