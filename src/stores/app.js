@@ -31,10 +31,30 @@ const Endpoint = types.model({
     parameters: types.maybe(types.array(Parameter)),
     active:     false
 
-}).views(self => ({
+}).actions(self => ({
+
+    // take input data from query string and update UI
+    setInput(queryString) {
+        if (self.parameters) {
+            self.parameters.forEach((parameter) => {
+                parameter.setSend(false)
+            })
+            if (queryString) {
+                queryString.split('&').forEach( (newParameter) => {
+                    let param = self.getParameterByName(newParameter.split('=')[0])
+                    if (param) {
+                        param.setValue(newParameter.split('=')[1])
+                        param.setSend(true)
+                    }
+                })
+            }
+        }
+    }
+
+})).views(self => ({
 
     getParameterByName(parameterName) {
-        return self.parameters.filter(parameter => parameter.name == parameterName)[0]
+        return self.parameters.find(parameter => parameter.name == parameterName)
     }
 
 }))
@@ -57,8 +77,11 @@ const Category = types.model({
 
 })).views(self => ({
 
+    hasEndpoint(endpointName) {
+        return (self.endpoints.filter(endpoint => endpoint.name == endpointName).length > 0)
+    },
     getEndpointByName(endpointName) {
-        return self.endpoints.filter(endpoint => endpoint.name == endpointName)[0]
+        return self.endpoints.find(endpoint => endpoint.name == endpointName)
     }
 
 }))
@@ -70,7 +93,8 @@ const Url = types.model({
     base: '',
     endpoint: '',
     headparams: '',
-    query: ''
+    query: '',
+    ts: types.optional(types.integer, () => new Date().getTime() ) // timestamp to also trigger same param urls
 
 }).actions(self => ({
 
@@ -86,11 +110,12 @@ const Url = types.model({
     setQuery(query) {
         self.query = query
     },
-    setUrl(base, endpoint, headparams, query) {
+    setUrl( { base, endpoint, headparams, query, ts } ) {
         self.base = base
         self.endpoint = endpoint
         self.headparams = headparams
         self.query = query
+        self.ts = ts
     }
 
 })).views(self => ({
@@ -110,10 +135,6 @@ const Response = types.model({
     error:  false,
 
 }).actions(self => ({
-
-    setUrl(newUrl) {
-        self.url = newUrl
-    },
 
     setBody(newBody, type) {
         let error = false
@@ -143,16 +164,19 @@ const Response = types.model({
         self.error = newState
         // reload error-json when request for image or stream fails (no XHR used for those and no way to access original error json) 
         if ( newState && (self.type == 'imageUrl' || self.type == 'audioUrl')) {
-            yield self.fetchUrl(self.url)
+            yield self.fetchUrl()
         }
     }),
 
-    fetchUrl: flow(function* (requestUrl) {
-        self.pending = true
+    fetchUrl: flow(function* () {
         try {
-            const response = yield fetch(requestUrl.get(), {credentials: 'omit'})
+            const response = yield fetch(self.url.get(), {credentials: 'omit'})
             if (!response.ok) {
                 throw new Error(yield response.text())
+            }
+            if (self.url.get() != response.url) {
+                // more recent fetch performed/in transit -> don't process this result
+                return
             }
             if (response.headers.get('Content-Type').includes('json')) {
                 self.setBody( yield response.json(), 'json')
@@ -163,7 +187,6 @@ const Response = types.model({
                 self.type = response.headers.get('Content-Type')
                 self.setError(true, `${self.getBody()}\n${response.headers.get('Content-Type')}`)
             }
-            self.setUrl(requestUrl)
         } catch (error) {
             try {
                 // html error page from server (404 etc)
@@ -200,22 +223,31 @@ const AppStore = types.model({
         self.response = Response.create({url: {}})
     },
 
-    cancelPendingRequest() {
-        self.response.setPending(false)
-    },
-
     toggleActiveCategory(categoryName) {
         self.categories.forEach((category) => {
             category.active = (category.name == categoryName && !category.active)
         })
     },
 
-    fetchEndpoint: flow(function* (endpoint, parameters) {
-        if (self.response.pending) return
-        // create request url
+    // adapt UI to query (history changes from browser)
+    selectEndpoint(endpointName, parameters) {
+        let cat = self.getCategoryByEndpoint(endpointName)
+        if (cat) {
+            cat.active = false
+            self.toggleActiveCategory(cat.name)
+            let endpoint = cat.getEndpointByName(endpointName)
+            if (endpoint) {
+                endpoint.active = false
+                cat.toggleActiveEndpoint(endpointName)
+                endpoint.setInput(parameters)
+            }
+        }
+    },
+
+    fetchEndpoint: flow(function* (endpointName, parameters, directFetch) {
         let headParameters = ''
         let requestUrl = Url.create()
-        requestUrl.setEndpoint(endpoint)
+        requestUrl.setEndpoint(endpointName)
         requestUrl.setQuery(parameters)
 
         self.header.forEach((parameter) => { // transfer head parameters
@@ -227,19 +259,22 @@ const AppStore = types.model({
         })
         requestUrl.setHeadparams(headParameters.slice(0, -1)) // remove trailing &
 
-        if (['getCoverArt','stream','download'].includes(endpoint)) {
-            self.response.error = false
-            self.response.pending = true
-            self.response.setUrl(requestUrl)
-            if (endpoint == 'getCoverArt') {
+        if (!directFetch) {
+            self.selectEndpoint(endpointName, parameters)
+        }
+        self.response.error = false
+        self.response.pending = true
+        self.response.url.setUrl(requestUrl)
+        if (['getCoverArt','stream','download'].includes(endpointName)) {
+            if (endpointName == 'getCoverArt') {
                 self.response.type = 'imageUrl'
-            } else if (endpoint == 'stream') {
+            } else if (endpointName == 'stream') {
                 self.response.type = 'audioUrl'
             } else {
                 self.response.type = 'fileUrl'
             }
         } else {
-            yield self.response.fetchUrl(requestUrl)
+            yield self.response.fetchUrl()
         }
     })
 
@@ -249,14 +284,16 @@ const AppStore = types.model({
         return (self.categories.filter(category => category.active === true).length > 0)
     },
     get activeCategory() {
-        return self.categories.filter(category => category.active === true)[0]
+        return self.categories.find(category => category.active === true)
     },
     getCategoryByName(categoryName) {
-        return self.categories.filter(category => category.name == categoryName)[0]
+        return self.categories.find(category => category.name == categoryName)
     },
-
+    getCategoryByEndpoint(endpointName) {
+        return self.categories.find(category => category.hasEndpoint(endpointName))
+    },
     getHeadParameterByName(parameterName) {
-        return self.header.filter(headParameter => headParameter.name == parameterName)[0]
+        return self.header.find(headParameter => headParameter.name == parameterName)
     }
 
 }))

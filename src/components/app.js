@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import { Card, Button } from 'react-bootstrap'
+import useRouter from '/components/util/router'
 import NetworkIndicator from '/components/logo'
 import Help from '/components/help'
 import Header from '/components/header'
@@ -20,6 +21,8 @@ const App = observer(({ api, appState }) => {
 
 	const [showHelp, setShowHelp] = useState(false)
 	const toggleHelp = () => setShowHelp(!showHelp)
+
+	const [pushBrowserState] = useRouter(appState)
 
 	return (
 		<div id="app" class="container-fluid">
@@ -50,7 +53,7 @@ const App = observer(({ api, appState }) => {
 									showEndpoints={true}
 									showHelp={showHelp}
 									toggleActiveCategory={appState.toggleActiveCategory}
-									fetchEndpoint={appState.fetchEndpoint}
+									pushBrowserState={pushBrowserState}
 									/>
 							</div>
 						)}

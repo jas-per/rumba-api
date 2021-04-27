@@ -54,6 +54,7 @@ const Response = observer(({ response }) =>
                 <div class="response-none">
                     <DoubleLeftIcon />
                     <span>
+                        {/* TODO: insert help intro */}
                         <div>please use left menu</div>
                         <div>to call api endpoints</div>
                     </span>
@@ -83,8 +84,8 @@ const Response = observer(({ response }) =>
 
             ) : (response.type == 'fileUrl' ? (
                 <Download   url={response.url}
-                            onerror={() => response.setError(true, 'Failed to load file')}
-                            onload={() => response.setPending(false)} />
+                            onerror={response.setError}
+                            onload={response.setPending} />
             ) : (response.type == 'html' ? (
                 /* eslint-disable-next-line react/no-danger */
                 <div class="scrollbox" dangerouslySetInnerHTML={{__html: response.getBody()}} >

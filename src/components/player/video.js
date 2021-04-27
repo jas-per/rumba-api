@@ -24,11 +24,14 @@ const useVideo = url => {
 		[isPlaying]
 	)
 	useEffect(() => {
-			setPlaying(false)
-			setLoading(true)
-			video.current.src = url.get()
+			// avoid passing xhr-urls to video.src (view gets changed only after xhr-responses arrive)
+			if (url.endpoint == 'stream') {
+				setPlaying(false)
+				setLoading(true)
+				video.current.src = url.get()
+			}
 		},
-		[url]
+		[url, url.ts]
 	)
 	useEffect(() => {
 			video.current.muted = muted

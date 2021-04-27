@@ -37,7 +37,7 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     app: { import: './index.js', dependOn: 'common' },
-    common: ['preact','mobx','mobx-react-lite','mobx-state-tree','react-bootstrap','react-xml-viewer'],
+    common: ['preact','mobx','mobx-react-lite','mobx-state-tree','wouter-preact','react-bootstrap','react-xml-viewer'],
   },
   optimization: {
     splitChunks: {
@@ -102,6 +102,10 @@ module.exports = {
     path: path.join(__dirname, '..', 'SDtest', 'api', 'dist'),
     // path: path.join(__dirname, '..', 'rumba-server', 'api'),
     pathinfo: true // output debug path info
+  },
+
+  devServer: {
+    historyApiFallback: true
   },
 
   plugins

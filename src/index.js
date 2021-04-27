@@ -34,12 +34,13 @@ if (window.localStorage) {
     window.addEventListener("unload", () => {
         if(!window.clearLocalStorage){
             try {
-                appState.cancelPendingRequest()
+                // don't store response (could be too large) 
+                appState.initResponse()
                 localStorage.setItem('snapshot', JSON.stringify(getSnapshot(appState)))
             } catch(domException) {
                 if (domException.name === 'QuotaExceededError' ||
                     domException.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
-                        // very unlikely to happen - quota should be more than enough for state data on modern browsers
+                        // very unlikely to happen - quota should give more than enough space for state data on modern browsers
                         console.log('Storage quota exeeded, deleting ui-state')
                         localStorage.clear()
                     }
@@ -50,5 +51,5 @@ if (window.localStorage) {
 
 ReactDOM.render(
     React.createElement(App, {api: apiJSON, appState}),
-    document.getElementById('content')
+    document.getElementById('root')
 )

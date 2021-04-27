@@ -4,11 +4,14 @@ import { useEffect } from 'react'
 const Image = observer(({ url, onerror, onload }) => {
 
     useEffect(() => {
-        // trigger reload even if src unchanged:
-        // directly setting src needed because react caches img.src
-        document.getElementById('cover-image').src=url.get()
+            // avoid passing xhr-urls to img.src (view gets changed only after xhr-responses arrive)
+            if (url.endpoint == 'getCoverArt') {
+                // trigger reload even if src unchanged:
+                // directly setting src needed because react caches img.src
+                document.getElementById('cover-image').src=url.get()
+            }
         },
-        [url]
+        [url, url.ts]
     )
 
     return (
@@ -16,6 +19,7 @@ const Image = observer(({ url, onerror, onload }) => {
                 onerror={onerror}
                 onload={onload} />
     )
+    
 })
 
 export default Image

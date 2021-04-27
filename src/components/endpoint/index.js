@@ -4,14 +4,15 @@ import { CaretRightIcon, CaretDownIcon } from '/icons'
 import Parameter from '/components/parameter'
 import './index.css'
 
-const onFormSubmit = (event, fetchEndpoint) => {
+const onFormSubmit = (event, pushBrowserState) => {
     event.preventDefault()
-	fetchEndpoint(	event.target.getAttribute('action'),
-					new URLSearchParams(new FormData(event.target)).toString()
-					)
+	let endpoint = event.target.getAttribute('action')
+	// browser processed form data -> get validated query via URLSearchParams
+	let params = new URLSearchParams(new FormData(event.target)).toString()
+	pushBrowserState(endpoint, params)
 }
 
-const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetchEndpoint }) => 
+const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, pushBrowserState }) => 
 	<ListGroup.Item className={`endpoint-panel ${appState.active ? 'active' : ''}`}>
 		<Card className="endpoint-card">
 			<Card.Header className="endpoint-header" onClick={() => toggleActiveEndpoint(api.name)}>
@@ -30,7 +31,7 @@ const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, fetc
 				</div>
 			)}
 			<Form 	className={`endpoint-form ${appState.active ? 'active' : ''}`}
-					onSubmit={(event) => {onFormSubmit(event, fetchEndpoint)}}
+					onSubmit={(event) => {onFormSubmit(event, pushBrowserState)}}
 					action={api.name}
 					>
 				<div class="parameters-border">

@@ -4,7 +4,7 @@ import Endpoint from '/components/endpoint'
 import './index.css'
 
 
-const EndpointList = observer(({ api, appState, showHelp, fetchEndpoint }) => 
+const EndpointList = observer(({ api, appState, showHelp, pushBrowserState }) => 
     <ListGroup variant="flush" className="category-endpoints">
         {api.map((endpoint) => (
             <Endpoint 
@@ -12,7 +12,7 @@ const EndpointList = observer(({ api, appState, showHelp, fetchEndpoint }) =>
                 appState={appState.getEndpointByName(endpoint.name)}
                 showHelp={showHelp}
                 toggleActiveEndpoint={appState.toggleActiveEndpoint}
-                fetchEndpoint={fetchEndpoint}
+                pushBrowserState={pushBrowserState}
                 />
         ))}
     </ListGroup>

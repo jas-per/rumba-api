@@ -32,7 +32,7 @@ const ConditionalWrapper = ({
     children,
 }) => (condition ? wrapper(children) : children)
 
-const Category = observer(({ api, appState, isMinimized, showEndpoints, showHelp, toggleActiveCategory, fetchEndpoint}) => 
+const Category = observer(({ api, appState, isMinimized, showEndpoints, showHelp, toggleActiveCategory, pushBrowserState}) => 
 	<ListGroup.Item className={`category-panel ${isMinimized ? 'minimized' : ''} ${appState.active ? 'active' : ''}`}>
 		<Card className="category-card">
 			<ConditionalWrapper condition={isMinimized} wrapper={children => (
@@ -62,7 +62,7 @@ const Category = observer(({ api, appState, isMinimized, showEndpoints, showHelp
 				<EndpointList 	api={api.endpoints}
 								appState={appState}
 								showHelp={showHelp}
-								fetchEndpoint={fetchEndpoint} />
+								pushBrowserState={pushBrowserState} />
 			)}
 		</Card>
 	</ListGroup.Item>

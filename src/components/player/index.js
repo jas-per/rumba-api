@@ -71,12 +71,12 @@ const Player = observer(({ url, onError, onLoad }) => {
 			<div id="video-player-pane"
 				class={video.audioOnly ? '' : 'with-video-pane'}
 				onClick={video.togglePlaying}>
-				{videoElement}
-				{!video.audioOnly && (
-					<span class="big-button-overlay">
-						{video.isPlaying ? <PauseIcon /> : <PlayIcon />}
-					</span>
-				)}
+					{videoElement}
+					{!video.audioOnly && (
+						<span class="big-button-overlay">
+							{video.isPlaying ? <PauseIcon /> : <PlayIcon />}
+						</span>
+					)}
 			</div>
 			<div class="player-footer" />
 		</div>
