@@ -91,6 +91,7 @@ const Category = types.model({
 const Url = types.model({
 
     base: '',
+    appDir: '',
     endpoint: '',
     headparams: '',
     query: '',
@@ -219,8 +220,8 @@ const AppStore = types.model({
 
 }).actions(self => ({
 
-    initResponse() {
-        self.response = Response.create({url: {}})
+    initResponse(appDir) {
+        self.response = Response.create({url: {appDir}})
     },
 
     toggleActiveCategory(categoryName) {
@@ -245,6 +246,10 @@ const AppStore = types.model({
     },
 
     fetchEndpoint: flow(function* (endpointName, parameters, directFetch) {
+        if (!endpointName || endpointName == '/') { // show startpage if root url
+            self.response.type = 'none'
+            return
+        }
         let headParameters = ''
         let requestUrl = Url.create()
         requestUrl.setEndpoint(endpointName)

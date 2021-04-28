@@ -17,8 +17,14 @@ let appState = AppStore.create(apiJSON)
 apiJSON.header.forEach((headParameter) => {
     appState.getHeadParameterByName(headParameter.name).setValue(headParameter.default)
 })
+// initialize with current server location as default
+appState.getHeadParameterByName('server').setValue(location.origin)
+
+// adapt base url if served from subdir
+let appDir = location.pathname.substring(0, location.pathname.lastIndexOf('/')+1)
+
 // start with empty response
-appState.initResponse()
+appState.initResponse(appDir)
 
 // uncomment when modifying model
 // localStorage.clear()
@@ -35,7 +41,7 @@ if (window.localStorage) {
         if(!window.clearLocalStorage){
             try {
                 // don't store response (could be too large) 
-                appState.initResponse()
+                appState.initResponse(appDir)
                 localStorage.setItem('snapshot', JSON.stringify(getSnapshot(appState)))
             } catch(domException) {
                 if (domException.name === 'QuotaExceededError' ||

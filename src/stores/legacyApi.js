@@ -1,5 +1,5 @@
 const apiJSON = {
-	version: '20210311',
+	version: '20210428',
 	hint: 'Legacy Subsonic api',
 	compat: 'Differences between rum.ba server and Subsonic are highlighted in the help text. A complete overview can be found here (TODO: insert link)',
 	header: [
@@ -38,7 +38,7 @@ const apiJSON = {
 			hint: 'Adress of the server',
 			required: true,
 			type: 'string',
-			default: 'http://localhost:1177'
+			default: 'will be set to app origin / url'
 		}
 	],
 	categories: [

@@ -16,7 +16,7 @@ const plugins = [
   new CopyPlugin({
     patterns: [{
       from: "resources",
-      to: path.join(__dirname, '..', 'SDtest', 'api', 'dist', 'resources')
+      to: path.join(__dirname, '..', 'SDtest', 'api', 'resources')
     }],
   }),
   new webpack.NoEmitOnErrorsPlugin(),
@@ -99,13 +99,16 @@ module.exports = {
     }
   },
   output: {
-    path: path.join(__dirname, '..', 'SDtest', 'api', 'dist'),
+    path: path.join(__dirname, '..', 'SDtest', 'api'),
     // path: path.join(__dirname, '..', 'rumba-server', 'api'),
-    pathinfo: true // output debug path info
+    pathinfo: true, // output debug path info
   },
 
   devServer: {
-    historyApiFallback: true
+    publicPath: '/api/',
+    historyApiFallback: {
+      index:'/api/index.html'
+    }
   },
 
   plugins
