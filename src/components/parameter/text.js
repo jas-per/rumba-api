@@ -9,7 +9,7 @@ const TextParam = observer(({ appState, api }) =>
 		value={appState.value}
 		defaultValue={api.default}
 		disabled={!api.required && !appState.send}
-		placeholder={api.multiple ? "1 or [1, 2, 3, ..]" : api.type}
+		placeholder={api.multiple ? "1, 2, 3, .." : api.type}
 		min={api.min} max={api.max} step={api.type == 'float' ? 0.01 : 1}
 		onChange={(event) => {appState.setValue(event.target.value)}}
 		size="sm"

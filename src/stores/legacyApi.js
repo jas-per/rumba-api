@@ -1,5 +1,5 @@
 const apiJSON = {
-	version: '20210428',
+	version: '20210430',
 	hint: 'Legacy Subsonic api',
 	compat: 'Differences between rum.ba server and Subsonic are highlighted in the help text. A complete overview can be found here (TODO: insert link)',
 	header: [
@@ -976,7 +976,7 @@ const apiJSON = {
 							type: 'int',
 							multiple:true
 						},
-						{	name: 'songId',
+						{	name: 'artistId',
 							hint: 'The ID of an artist to star. Use this rather than "id" if the client accesses the media collection according to ID3 tags rather than file structure',
 							required: false,
 							type: 'int',
@@ -999,7 +999,7 @@ const apiJSON = {
 							type: 'int',
 							multiple:true
 						},
-						{	name: 'songId',
+						{	name: 'artistId',
 							hint: 'The ID of an artist to unstar. Use this rather than "id" if the client accesses the media collection according to ID3 tags rather than file structure',
 							required: false,
 							type: 'int',

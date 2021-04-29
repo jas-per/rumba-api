@@ -13,6 +13,10 @@ const Parameter = types.model({
         self.value = newValue
     },
 
+    appendValue(newValue) {
+        self.value += `,${newValue}`
+    },
+
     toggleSend() {
         self.send = !self.send
     },
@@ -43,8 +47,15 @@ const Endpoint = types.model({
                 queryString.split('&').forEach( (newParameter) => {
                     let param = self.getParameterByName(newParameter.split('=')[0])
                     if (param) {
-                        param.setValue(newParameter.split('=')[1])
-                        param.setSend(true)
+                        let value = newParameter.split('=')[1]
+                        if (value) {
+                            if (param.send) { // send is false for first in multi
+                                param.appendValue(value)
+                            } else {
+                                param.setValue(value)
+                            }
+                            param.setSend(true)
+                        }
                     }
                 })
             }
