@@ -14,9 +14,8 @@ const Endpoint = observer(({ api, appState, showHelp, toggleActiveEndpoint, push
 		// -> input gets validated via FormData
 		let formParams = new FormData(event.target)
 		// -> split text inputs with comma-separated arrays into multiple params with the same name
-		let multival = api.parameters.filter(parameter => parameter.multiple)
-		if (multival) {
-			for (let param of multival) {
+		if (api.parameters && api.parameters.filter(parameter => parameter.multiple)) {
+			for (let param of api.parameters.filter(parameter => parameter.multiple)) {
 				param = appState.getParameterByName(param.name)
 				if (param.send && param.value) {
 					let values = param.value.split(',')
