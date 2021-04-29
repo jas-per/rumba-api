@@ -15,7 +15,7 @@ const Download = observer(({ url, onerror, onload }) => {
                 const iframe = document.createElement("iframe")
                 iframe.onload = () => onload(false)
                 iframe.onerror = () => onerror(true, 'Failed to load file')
-                iframe.src = url.get()
+                iframe.src = url.href
                 // append to dom
                 document.getElementById('iframe-div').appendChild(iframe)
             }

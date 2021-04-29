@@ -132,7 +132,7 @@ const Url = types.model({
 
 })).views(self => ({
 
-    get() {
+    get href() {
         return `${self.base}/rest/${self.endpoint}.view?${self.headparams}${self.query != '' ? '&': ''}${self.query}`
     }
 
@@ -141,23 +141,23 @@ const Url = types.model({
 const Response = types.model({
 
     url:    Url,
-    body:   '',
+    raw:   '',
     type:   'none',
     pending:false,
     error:  false,
 
 }).actions(self => ({
 
-    setBody(newBody, type) {
+    setRaw(newResponse, type) {
         let error = false
         if (type == 'json') {
-            self.body = JSON.stringify(newBody)
-            if (newBody['subsonic-response'].status != 'ok') {
+            self.raw = JSON.stringify(newResponse)
+            if (newResponse['subsonic-response'].status != 'ok') {
                 error = true
             }
         } else {
-            self.body = newBody
-            if (type == 'xml' && /status="(\w+)"/.exec(newBody)[1] != 'ok') {
+            self.raw = newResponse
+            if (type == 'xml' && /status="(\w+)"/.exec(newResponse)[1] != 'ok') {
                 error = true
             }
         }
@@ -171,7 +171,7 @@ const Response = types.model({
 
     setError: flow(function* (newState, errorMsg) {
         if (errorMsg) {
-            self.setBody(errorMsg, self.type)
+            self.setRaw(errorMsg, self.type)
         }
         self.error = newState
         // reload error-json when request for image or stream fails (no XHR used for those and no way to access original error json) 
@@ -182,30 +182,30 @@ const Response = types.model({
 
     fetchUrl: flow(function* () {
         try {
-            const response = yield fetch(self.url.get(), {credentials: 'omit'})
+            const response = yield fetch(self.url.href, {credentials: 'omit'})
             if (!response.ok) {
                 throw new Error(yield response.text())
             }
-            if (self.url.get() != response.url) {
+            if (self.url.href != response.url) {
                 // more recent fetch performed/in transit -> don't process this result
                 return
             }
             if (response.headers.get('Content-Type').includes('json')) {
-                self.setBody( yield response.json(), 'json')
+                self.setRaw( yield response.json(), 'json')
             } else if (response.headers.get('Content-Type').includes('xml')) {
-                self.setBody( yield response.text(), 'xml')
+                self.setRaw( yield response.text(), 'xml')
             } else {
                 // probably wrong media type
                 self.type = response.headers.get('Content-Type')
-                self.setError(true, `${self.getBody()}\n${response.headers.get('Content-Type')}`)
+                self.setError(true, `${self.raw}\n${response.headers.get('Content-Type')}`)
             }
         } catch (error) {
             try {
                 // html error page from server (404 etc)
-                self.setBody(/<body>([\s\S]+)<\/body>/.exec(error)[1], 'html')
+                self.setRaw(/<body>([\s\S]+)<\/body>/.exec(error)[1], 'html')
             } catch (e) {
                 // sometimes its impossible to get a proper reason from the browser eg intentionally when using cors 
-                self.setBody(`Server not found?!\n${error}`, 'text')
+                self.setRaw(`Server not found?!\n${error}`, 'text')
             }
             self.error = true
         }
@@ -214,8 +214,8 @@ const Response = types.model({
 
 })).views(self => ({
 
-    getBody(){
-        return (self.type == 'json') ? JSON.parse(self.body) : self.body
+    get body(){
+        return (self.type == 'json') ? JSON.parse(self.raw) : self.raw
     }
 
 }))

@@ -62,12 +62,12 @@ const Response = observer(({ response }) =>
 
             ) : (response.type == 'json' ? (
                 <div class="response-json scrollbox">
-                    <JSONViewer json={response.getBody()} collapsible="true" />
+                    <JSONViewer json={response.body} collapsible="true" />
                 </div>
 
             ) : (response.type == 'xml' ? (
                 <div class="response-xml scrollbox">
-                    <XMLViewer xml={response.getBody()} theme={xmlViewerTheme} collapsible="true" />
+                    <XMLViewer xml={response.body} theme={xmlViewerTheme} collapsible="true" />
                 </div>
 
             ) : (response.type == 'imageUrl' ? (
@@ -88,11 +88,11 @@ const Response = observer(({ response }) =>
                             onload={response.setPending} />
             ) : (response.type == 'html' ? (
                 /* eslint-disable-next-line react/no-danger */
-                <div class="scrollbox" dangerouslySetInnerHTML={{__html: response.getBody()}} >
+                <div class="scrollbox" dangerouslySetInnerHTML={{__html: response.body}} >
                     {/* trusts the servermessages ! pr welcome if you're concerned about xss */}
                 </div>
             ) : (
-                <pre>{response.getBody()}</pre>
+                <pre>{response.body}</pre>
             )))))))}
         </div>
         { response.pending && (

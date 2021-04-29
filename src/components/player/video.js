@@ -28,7 +28,7 @@ const useVideo = url => {
 			if (url.endpoint == 'stream') {
 				setPlaying(false)
 				setLoading(true)
-				video.current.src = url.get()
+				video.current.src = url.href
 			}
 		},
 		[url, url.ts]

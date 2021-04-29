@@ -8,7 +8,7 @@ const Image = observer(({ url, onerror, onload }) => {
             if (url.endpoint == 'getCoverArt') {
                 // trigger reload even if src unchanged:
                 // directly setting src needed because react caches img.src
-                document.getElementById('cover-image').src=url.get()
+                document.getElementById('cover-image').src=url.href
             }
         },
         [url, url.ts]
