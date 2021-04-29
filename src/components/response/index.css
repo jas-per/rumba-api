@@ -54,12 +54,31 @@
 .media-player {
 	margin-top: 0.25em;
 }
-.response-none {
-	display: flex;
-	padding: 5px;
+#response-url > span:first-child {
+	float: left;
 }
-.response-none > svg {
-	font-size: 3em;
+#response-url > span:last-child {
+	float: right;
+}
+.intro-hint div {
+	margin: -0.2em;
+}
+.intro-hint svg {
+	margin: 0.5em;
+	font-size: 20px;
+}
+.intro-hint {
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	margin: -0.3em;
+}
+.response-none > div {
+	padding: 1.5em;
+}
+.response-none h2 {
+	text-align: center;
+	margin-bottom: 0.5em;
 }
 #response-display.error #response-url {
 	background-color: #fdcbd4;

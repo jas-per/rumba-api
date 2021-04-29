@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react-lite'
 import { Card } from 'react-bootstrap'
-import { DoubleLeftIcon, BullseyeIcon, AlertIcon } from '/icons'
+import { DoubleLeftIcon, DoubleRightIcon, BullseyeIcon, AlertIcon } from '/icons'
 import XMLViewer from 'react-xml-viewer'
 import JSONViewer from './json-viewer'
+import Intro from './intro'
 import Download from './download'
 import Image from './image'
 import Player from '/components/player'
@@ -17,14 +18,31 @@ const xmlViewerTheme = {
 
 const Response = observer(({ response }) =>
 
-    <div id="response-display" class={`${response.error ? 'error' : ''}`}>
+    <div id="response-display" class={`${response.error || response.type == 'none' ? 'error' : ''}`}>
         <Card>
             <Card.Header id="response-url">
-                <span>
-                    {response.error ? <AlertIcon /> : <BullseyeIcon />} url: 
-                </span>
-                { response.type != 'none' && (
+                { response.type == 'none' ? (
                     <>
+                    <span class="intro-hint">
+                        <DoubleLeftIcon />
+                        <span>
+                            <div>please use left menu</div>
+                            <div>to call api endpoints</div>
+                        </span>
+                    </span>
+                    <span class="intro-hint">
+                        <span>
+                            <div>click help to</div>
+                            <div>expand details</div>
+                        </span>
+                        <DoubleRightIcon />
+                    </span>
+                    </>
+                ) : (
+                    <>
+                    <span>
+                        {response.error ? <AlertIcon /> : <BullseyeIcon />} url: 
+                    </span>
                     <span class="url-base">
                         {response.url.base}
                     </span>
@@ -52,12 +70,7 @@ const Response = observer(({ response }) =>
         <div id="response-body">
             { response.type == 'none' ? (
                 <div class="response-none">
-                    <DoubleLeftIcon />
-                    <span>
-                        {/* TODO: insert help intro */}
-                        <div>please use left menu</div>
-                        <div>to call api endpoints</div>
-                    </span>
+                    <Intro />
                 </div>
 
             ) : (response.type == 'json' ? (
