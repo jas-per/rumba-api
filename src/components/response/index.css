@@ -54,10 +54,10 @@
 .media-player {
 	margin-top: 0.25em;
 }
-#response-url > span:first-child {
+#response-url > span.intro-hint:first-child {
 	float: left;
 }
-#response-url > span:last-child {
+#response-url > span.intro-hint:last-child {
 	float: right;
 }
 .intro-hint div {
